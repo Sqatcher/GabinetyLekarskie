@@ -4,7 +4,8 @@
 /public/storage
 /storage/*.key
 /vendor
-.env
+.php-cs-fixer.cache
+../index.ipynb
 .env.backup
 .env.production
 .phpunit.result.cache
