@@ -41,21 +41,11 @@ use function PHPUnit\Framework\isNull;
 */
 
 Route::get('/', function () {
-    BetResultController::events_update();
     $user = Auth::user();
     if ($user) {
         return view('welcome')->with('user', $user);
     }
     return view('welcome');
 })->name('welcome');
-
-
-Route::get('/home', function (Request $request) {
-    return redirect('/')->with('status', $request->session()->get('status'));
-})->name('home');
-
-Route::post('/home', function () {
-    return redirect('/');
-})->name('home');
 
 require __DIR__.'/auth.php';
