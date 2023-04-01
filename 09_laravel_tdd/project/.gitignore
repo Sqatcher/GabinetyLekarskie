@@ -1,11 +1,13 @@
+.php-cs-fixer.*
+.phpunit*
+
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
-.php-cs-fixer.cache
-../index.ipynb
+.env
 .env.backup
 .env.production
 .phpunit.result.cache
