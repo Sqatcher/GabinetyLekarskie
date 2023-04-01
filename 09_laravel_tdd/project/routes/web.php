@@ -43,9 +43,17 @@ use function PHPUnit\Framework\isNull;
 Route::get('/', function () {
     $user = Auth::user();
     if ($user) {
-        return view('welcome')->with('user', $user);
+        return view('dashboard')->with('user', $user);
     }
     return view('welcome');
 })->name('welcome');
+
+
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard')->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
