@@ -1,29 +1,21 @@
-# README #
+# Gabinety Lekarskie
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Uruchomienie-dev
 
-### What is this repository for? ###
+1. Wejdz do glownego katalogu - "GabinetyLekarskie".
+2. Wpisz `source php.env`.
+3. Wpisz `run ide`.
+4. Kiedy uruchomi sie php-Storm przejdz w terminalu do glownego katalogu "Gabinety Lekarskie", a nastepnie wpisz `./runserver.sh`.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Aleternatywnie:
+1. Wejdz do glownego katalogu - "GabinetyLekarskie".
+2. Wpisz `source php.env`.
+3. Wpisz np. run dev.
+4. Uruchom skrypt wpiszujac `./runserver.sh`.
+5. Otworz sobie nowe okno w terminalu, mozesz normalnie pracowac np. `source php.env`, a potem `run ide`.
 
-### How do I get set up? ###
+## Analizatory-dev
+Po tym jak juz masz uruchomiony serwer, mozesz czy z to w terminalu php storm, czy zwyklym, wpisac `./analizatory.sh`. Styl zostanie automatycznie naprawiony, phpstan oraz cs-fixer zwroci odpowiednie komunikaty o bledach lub ich braku.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+## Test-coverage-dev
+Kiedy masz uruchomiony server, skorzystaj ze skryptu wpisujac `./test-coverage.sh` w glownym katalogu. Powinines otrzymac wyniki w konsoli oraz po 10 sekundach powinna otworzyc sie strona z plikiem html, gdzie takze mozesz przegladac informacje. Mozesz tam zobaczyc, ktore ile linii kodu jest pokrytych testami oraz ktore konkretnie. 
