@@ -49,3 +49,10 @@ Thumbs.db
 *.wmv
 
 *.ipynb
+
+# Vendor
+vendor/
+
+# .ipynb_checkpoints
+.ipynb_checkpoints/
+
