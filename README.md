@@ -16,3 +16,6 @@ Aleternatywnie:
 
 ## Analizatory-dev
 Po tym jak juz masz uruchomiony serwer, mozesz czy z to w terminalu php storm, czy zwyklym, wpisac `./analizatory.sh`. Styl zostanie automatycznie naprawiony, phpstan oraz cs-fixer zwroci odpowiednie komunikaty o bledach lub ich braku.
+
+## Test-coverage-dev
+Kiedy masz uruchomiony server, skorzystaj ze skryptu wpisujac `./test-coverage.sh` w glownym katalogu. Powinines otrzymac wyniki w konsoli oraz po 10 sekundach powinna otworzyc sie strona z plikiem html, gdzie takze mozesz przegladac informacje. Mozesz tam zobaczyc, ktore ile linii kodu jest pokrytych testami oraz ktore konkretnie. 

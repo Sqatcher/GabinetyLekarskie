@@ -1,5 +1,8 @@
 <?php
 
+include './../c3.php';
+
+define('MY_APP_STARTED', true);
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
