@@ -8,6 +8,7 @@ use App\Http\Controllers\Account\DeleteAccountController;
 use App\Http\Controllers\Account\AccountHistoryController;
 use App\Http\Controllers\BetResultController;
 use App\Http\Controllers\BetsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LiveBetsController;
 use App\Http\Controllers\ProfileController;
 
@@ -43,9 +44,18 @@ use function PHPUnit\Framework\isNull;
 Route::get('/', function () {
     $user = Auth::user();
     if ($user) {
-        return view('welcome')->with('user', $user);
+        return view('dashboard')->with('user', $user);
     }
     return view('welcome');
 })->name('welcome');
+
+
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/gdzies', [DashboardController::class, 'gdzies'])->name('gdzies');
+    Route::get('/dashboard', [DashboardController::class, 'gdzies'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
