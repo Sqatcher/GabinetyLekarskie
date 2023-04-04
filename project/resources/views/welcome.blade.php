@@ -25,44 +25,24 @@
         </div>
 
         <!-- Remember Me -->
-        {{--        <div class="block mt-4">--}}
-        {{--            <label for="remember_me" class="inline-flex items-center">--}}
-        {{--                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">--}}
-        {{--                <span class="ml-2 text-sm text-gray-600">{{ __('Zapamiętaj mnie') }}</span>--}}
-        {{--            </label>--}}
-        {{--        </div>--}}
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ml-2 text-sm text-gray-600">{{ __('Zapamiętaj mnie') }}</span>
+            </label>
+        </div>
 
         <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{ __('Zapomniałeś hasła?') }}
+                </a>
+            @endif
 
             <x-primary-button class="ml-3">
                 {{ __('Zaloguj się') }}
             </x-primary-button>
         </div>
+
     </form>
 </x-guest-layout>
-
-
-
-
-
-{{--<div style="width:1000px; margin:auto; margin-top: 100px">
-
-    <div style = "width: fit-content;margin:auto">
-        <a style="font-size: 48px; font-family: Arial">Gabinety</a>
-    </div>
-
-    <div style="width:fit-content; margin: auto; margin-top: 300px;">
-        <form>
-          <div>
-            <label for="email">Email</label><br>
-            <input type="email" style="margin:5px 0 15px 0;" id="email" placeholder="jan.jan@gabinety.com" required>
-          </div>
-          <div>
-            <label for="password">Hasło</label><br>
-            <input type="password" id="password" style="margin-top:5px;" placeholder="hasło" required>
-          </div><br>
-          <button type="submit">Zaloguj się</button>
-        </form>
-    </div>
-
-</div>--}}
