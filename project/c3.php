@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:ignoreFile
 // @codeCoverageIgnoreStart
 
@@ -110,7 +111,6 @@ try {
 }
 
 if (!defined('C3_CODECOVERAGE_MEDIATE_STORAGE')) {
-
     // workaround for 'zend_mm_heap corrupted' problem
     gc_disable();
 
