@@ -1,5 +1,3 @@
 <x-app-layout>
-
-    Nic
-
+Nic
 </x-app-layout>

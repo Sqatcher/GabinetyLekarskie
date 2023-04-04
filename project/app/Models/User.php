@@ -23,10 +23,11 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
-        'name', 'surname', 'nickname', 'email', 'password',
-        'phone_number', 'person_number', 'deposit', 'premium', 'confirmed'
+         'email', 'password', 'role'
     ];
+
     protected $table = 'users';
+
     public function key(): string
     {
         return 'model_user_'.$this->id;
