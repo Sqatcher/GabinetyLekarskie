@@ -48,5 +48,11 @@ Thumbs.db
 *.mov
 *.wmv
 
-index.ipynb
-project/index.ipynb
+*.ipynb
+
+# Vendor
+vendor/
+
+# .ipynb_checkpoints
+.ipynb_checkpoints/
+
