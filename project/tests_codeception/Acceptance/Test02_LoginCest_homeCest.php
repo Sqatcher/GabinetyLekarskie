@@ -37,6 +37,6 @@ class Test02_LoginCest_homeCest
         $I->fillField("password", "first");
         $I->click("Zaloguj się");
 
-        $I->see("nic");
+        $I->see("Witaj!");
     }
 }
