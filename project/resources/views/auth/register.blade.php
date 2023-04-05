@@ -9,6 +9,20 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Facility -->
+        <div>
+            <label for="facility">Facility:</label>
+            <select name="facility" id="facility">
+                <option value="">--- Choose a facility ---</option>
+                <option value=1 selected>All</option>
+                <option value=2>F1</option>
+                <option value=3>F2</option>
+                <option value=4>F3</option>
+                <option value=5>F4</option>
+                <option value=6>F5</option>
+            </select>
+        </div>
+
         <!-- Role -->
         <div>
             <label for="role">Role:</label>

@@ -36,11 +36,12 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'role' => [ 'required' ],
+            'facility' => ['required'],
             'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
             //'nickname' => ['required', 'string',  'max:255', 'unique:'.User::class],
-            //'password' => ['required',
-             //   'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
-            //'repeat_password' => ['required', 'same:password'],
+            'password' => ['required',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
+            'repeat_password' => ['required', 'same:password']
         ]);
 
 /*
@@ -55,13 +56,29 @@ class RegisteredUserController extends Controller
         $user->email =  $request->email;
         $user->password =  Hash::make(strval($request['password']));
         $user->role = $request->role;
+        $user->facility = $request->facility;
         $user->save();
-        //cos takiego msuze dodac jak chce przejsc do innej strony przy regulaminie
-        //Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-        //event(new Registered($user));
-
-        //Auth::login($user);
         return Redirect::to('/');
+    }
+
+    public function edit(int $id): View
+    {
+        $user = User::find($id);
+        return view('users.edit')->with('user', $user);
+    }
+
+    public function update(Request $request, int $id): View
+    {
+
+        $user = User::find($id);
+        if ($user != null) {
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->facility = $request->facility;
+            $user->save();
+        }
+
+        return view("/");
     }
 }
