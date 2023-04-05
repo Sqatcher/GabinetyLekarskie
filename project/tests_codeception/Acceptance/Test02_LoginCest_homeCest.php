@@ -11,7 +11,7 @@ class Test02_LoginCest_homeCest
     {
         $I->wantTo('Login new user');
 
-        $I->amOnPage("/home");
+        $I->amOnPage("/");
 
         $I->seeCurrentUrlEquals('/');
 

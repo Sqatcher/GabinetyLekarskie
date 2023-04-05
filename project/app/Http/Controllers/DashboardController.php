@@ -12,9 +12,9 @@ use Illuminate\View\View;
 class DashboardController extends Controller
 {
     /**
-     * Przejdź gdzieś
+     * Przejdź na stronę główną
      */
-    public function gdzies(Request $request): RedirectResponse
+    public function strona_glowna(Request $request): RedirectResponse
     {
         // i zrób coś
 
