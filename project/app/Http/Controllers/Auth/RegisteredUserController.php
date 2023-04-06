@@ -27,6 +27,11 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+    public function allusers(): View
+    {
+        return view('auth.allusers')->with('users', User::all());
+    }
+
     /**
      * Handle an incoming registration request.
      *
@@ -62,13 +67,13 @@ class RegisteredUserController extends Controller
         return Redirect::to('/');
     }
 
-    public function edit(int $id): View
+    public function edituser(int $id): View
     {
         $user = User::find($id);
-        return view('users.edit')->with('user', $user);
+        return view('auth.edituser')->with('user', $user);
     }
 
-    public function update(Request $request, int $id): View
+    public function update(Request $request, int $id): RedirectResponse
     {
 
         $user = User::find($id);
@@ -79,6 +84,6 @@ class RegisteredUserController extends Controller
             $user->save();
         }
 
-        return view("/");
+        return Redirect::to('/');
     }
 }

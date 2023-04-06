@@ -11,29 +11,31 @@
 
         <!-- Facility -->
         <div>
-            <label for="facility">Facility:</label>
+            <label for="facility">Placówka:</label>
             <select name="facility" id="facility">
-                <option value="">--- Choose a facility ---</option>
-                <option value=1 selected>All</option>
-                <option value=2>F1</option>
-                <option value=3>F2</option>
-                <option value=4>F3</option>
-                <option value=5>F4</option>
-                <option value=6>F5</option>
+                <option value="">--- Wybierz placówkę ---</option>
+                <!-- <option value=1 selected>All</option> -->
+                <option value=1>F1</option>
+                <option value=2>F2</option>
+                <option value=3>F3</option>
+                <option value=4>F4</option>
+                <option value=5>F5</option>
             </select>
+            <x-input-error :messages="$errors->get('facility')" class="mt-2" />
         </div>
 
         <!-- Role -->
         <div>
-            <label for="role">Role:</label>
+            <label for="role">Rola:</label>
             <select name="role" id="role">
-                <option value="">--- Choose a role ---</option>
-                <option value=1 selected>Admin</option>
-                <option value=2>Manager</option>
-                <option value=3>Worker</option>
-                <option value=4>Accountant</option>
-                <option value=5>Storeman</option>
+                <option value="">--- Wybierz rolę ---</option>
+                <!-- <option value=1 selected>Admin</option> -->
+                <option value=2>Kierownik</option>
+                <option value=3>Pracownik</option>
+                <option value=4>Księgowy</option>
+                <option value=5>Magazynier</option>
             </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->

@@ -60,10 +60,22 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/gdzies', [DashboardController::class, 'gdzies'])->name('gdzies');
     Route::get('/dashboard', [DashboardController::class, 'gdzies'])->name('dashboard');
+
+
+});
+
+
+
+Route::middleware(['admin'])->group(function () {
     Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("register");
     Route::post('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "store"])->name("register");
     Route::get('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("create");
+    Route::get('allusers', [\App\Http\Controllers\Auth\RegisteredUserController::class, "allusers"])->name("allusers");
+    Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
+    Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
 
 });
+
+
 
 require __DIR__.'/auth.php';

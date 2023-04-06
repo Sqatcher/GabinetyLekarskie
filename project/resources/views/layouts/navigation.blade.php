@@ -16,12 +16,20 @@
                         {{ __('gdzies') }}
                     </x-nav-link>
                 </div>
-
+                @if (Auth::check() && Auth::user()->role == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('register')" :active="request()->routeIs('auth.register')">
-                        {{ __('Register') }}
+                        {{ __('Zarejestruj') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('allusers')" :active="request()->routeIs('auth.allusers')">
+                        {{ __('Użytkownicy') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
 
 <!--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <a href="/register" class="mt-4">Register</a>
