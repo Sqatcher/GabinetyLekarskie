@@ -11,9 +11,9 @@ class Test02_LoginCest_homeCest
     {
         $I->wantTo('Login new user');
 
-        $I->amOnPage("/");
+        $I->amOnPage("/home");
 
-        $I->seeCurrentUrlEquals('/');
+        $I->seeCurrentUrlEquals('/login');
 
         $I->click("Zaloguj się");
         $I->see("Pole email jest wymagane");

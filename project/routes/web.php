@@ -56,6 +56,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/strona_glowna', [DashboardController::class, 'strona_glowna'])->name('strona_glowna');
     Route::get('/dashboard', [DashboardController::class, 'strona_glowna'])->name('dashboard');
+    Route::get('/home', [DashboardController::class, 'strona_glowna'])->name('home');
+
 });
 
 require __DIR__.'/auth.php';
