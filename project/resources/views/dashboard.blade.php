@@ -1,3 +1,3 @@
 <x-app-layout>
-Nic
+    Witaj!
 </x-app-layout>
