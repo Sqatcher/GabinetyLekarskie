@@ -7,7 +7,7 @@ use TestsCodeception\Support\AcceptanceTester;
 
 class Test06_CannotEditAdminRoleCest
 {
-    public function register(AcceptanceTester $I)
+    public function cannotEditAdmin(AcceptanceTester $I)
     {
         $I->wantTo('Cannot change admin role');
 
