@@ -57,6 +57,10 @@ Route::get('/', function () {
 })->name('welcome');
 
 
+#Route::get('/register', 'RegistrationController@create');
+#Route::post('register', 'RegistrationController@store');
+
+
 Route::middleware(['auth','verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -66,5 +70,19 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/home', [DashboardController::class, 'strona_glowna'])->name('home');
 
 });
+
+
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("register");
+    Route::post('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "store"])->name("register");
+    Route::get('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("create");
+    Route::get('allusers', [\App\Http\Controllers\Auth\RegisteredUserController::class, "allusers"])->name("allusers");
+    Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
+    Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
+
+});
+
+
 
 require __DIR__.'/auth.php';

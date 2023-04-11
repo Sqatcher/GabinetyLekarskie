@@ -171,6 +171,7 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [ 'facility' => 'placówka', 'role' => 'rola',
+        'name' => 'imię', 'surname' => 'nazwisko', 'password' => 'hasło', 'repeat_password' => 'powtórz hasło'] ,
 
 ];
