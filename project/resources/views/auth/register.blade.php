@@ -2,14 +2,14 @@
     <form method="POST" action="{{ url('create') }}">
         @csrf
 
-        <!-- Name -->
+        <!-- name -->
         <div class="mt-4">
             <x-input-label for="name" :value="__('Imię')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"  />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Surname -->
+        <!-- surname -->
         <div class="mt-4">
             <x-input-label for="surname" :value="__('Nazwisko')" />
             <x-text-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname')"  />
@@ -25,10 +25,9 @@
 
         <!-- Facility -->
         <div>
-            <label for="facility">Placówka:</label>
+            <x-input-label for="placówka" :value="__('Placówka')" />
             <select name="facility" id="facility">
-                <option value="">--- Wybierz placówkę ---</option>
-                <!-- <option value=1 selected>All</option> -->
+                <option name="facility" value="">--- Wybierz placówkę ---</option>
                 <option value=1>F1</option>
                 <option value=2>F2</option>
                 <option value=3>F3</option>
@@ -40,7 +39,7 @@
 
         <!-- Role -->
         <div>
-            <label for="role">Rola:</label>
+            <x-input-label for="rola" :value="__('Rola')" />
             <select name="role" id="role">
                 <option value="">--- Wybierz rolę ---</option>
                 <!-- <option value=1 selected>Admin</option> -->

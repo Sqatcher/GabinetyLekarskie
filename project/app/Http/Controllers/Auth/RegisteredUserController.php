@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
+use Illuminate\Validation\Validator;
 
 class RegisteredUserController extends Controller
 {
@@ -45,19 +46,24 @@ class RegisteredUserController extends Controller
             'role' => [ 'required' ],
             'facility' => ['required'],
             'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
-            //'nickname' => ['required', 'string',  'max:255', 'unique:'.User::class],
             'password' => ['required',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
             'repeat_password' => ['required', 'same:password']
         ]);
-
 /*
-        $user = User::create([
-            'email' => $request->email,
-            'password' => Hash::make(strval($request['password'])),
-            'role' => 1
-
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:8', 'confirmed'],
         ]);
+
+        $validator->messages()->add('email.unique', 'This email address is already in use.');
+
+        if ($validator->fails()) {
+            return redirect('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
 */
         $user = new User();
         $user->name = $request->name;
@@ -79,6 +85,13 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request, int $id): RedirectResponse
     {
+
+        $request->validate([
+            'name' => ['required'],
+            'surname' => ['required'],
+            'role' => [ 'required' ],
+            'facility' => ['required'],
+        ]);
 
         $user = User::find($id);
         if ($user != null) {
