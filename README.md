@@ -19,3 +19,15 @@ Po tym jak juz masz uruchomiony serwer, mozesz czy z to w terminalu php storm, c
 
 ## Test-coverage-dev
 Kiedy masz uruchomiony server, skorzystaj ze skryptu wpisujac `./test-coverage.sh` w glownym katalogu. Powinines otrzymac wyniki w konsoli oraz po 10 sekundach powinna otworzyc sie strona z plikiem html, gdzie takze mozesz przegladac informacje. Mozesz tam zobaczyc, ktore ile linii kodu jest pokrytych testami oraz ktore konkretnie. 
+
+## Tworzenie testów
+
+Aby utworzyć Acceptance test wpisz:
+```
+vendor/bin/codecept generate:cest Acceptance Test<numer>_<nazwa>
+```
+
+Aby sprawdzić działanie wpisz:
+```
+vendor/bin/codecept run
+```
