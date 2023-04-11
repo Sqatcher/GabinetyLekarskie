@@ -7,9 +7,9 @@ use TestsCodeception\Support\AcceptanceTester;
 
 class Test04_DontSeeRegisterCest
 {
-    public function login(AcceptanceTester $I)
+    public function register(AcceptanceTester $I)
     {
-        $I->wantTo('Login new user');
+        $I->wantTo('Cannot register new user');
 
         $I->amOnPage("/");
 
@@ -19,6 +19,10 @@ class Test04_DontSeeRegisterCest
         $I->fillField("password", "second");
         $I->click("Zaloguj się");
 
-        $I->dontSee("Zarestruj");
+        $I->dontSee("Zarejestruj");
+
+        $I->amOnPage("/create");
+        $I->seeCurrentUrlEquals("/");
+        $I->dontSee("Załóż konto");
     }
 }

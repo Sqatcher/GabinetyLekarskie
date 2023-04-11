@@ -7,9 +7,9 @@ use TestsCodeception\Support\AcceptanceTester;
 
 class Test03_RegisterCest
 {
-    public function login(AcceptanceTester $I)
+    public function register(AcceptanceTester $I)
     {
-        $I->wantTo('Login new user');
+        $I->wantTo('Register new user');
 
         $I->amOnPage("/");
 
@@ -20,24 +20,43 @@ class Test03_RegisterCest
         $I->click("Zaloguj się");
 
         $I->see("Zarejestruj");
-        $I->click("Zarestruj");
+        $I->click("Zarejestruj");
 
         $I->click("Załóż konto");
         $I->see("Pole imię jest wymagane");
         $I->see("Pole nazwisko jest wymagane");
         $I->see("Pole email jest wymagane");
         $I->see("Pole placówka jest wymagane");
-        $I->see("Pole role jest wymagane");
+        $I->see("Pole rola jest wymagane");
         $I->see("Pole hasło jest wymagane");
         $I->see("Pole powtórz hasło jest wymagane");
 
-        $I->fillField("imię", "Jan");
-        $I->fillField("nazwisko", "Kowalski");
+        $I->amOnPage("/allusers");
+        $I->seeElement("a:contains('First')");
+        $I->seeElement("a:contains('Second')");
+        $I->dontSeeElement("a:contains('Jan')");
+        $I->dontSeeElement("a:contains('Kowalski')");
+
+        $I->amOnPage("/create");
+
+        $I->fillField("name", "Jan");
+        $I->click("Załóż konto");
+
+        $I->dontSee("Pole imię jest wymagane");
+        $I->see("Pole nazwisko jest wymagane");
+        $I->see("Pole email jest wymagane");
+        $I->see("Pole placówka jest wymagane");
+        $I->see("Pole rola jest wymagane");
+        $I->see("Pole hasło jest wymagane");
+        $I->see("Pole powtórz hasło jest wymagane");
+
+        #$I->fillField("name", "Jan");
+        $I->fillField("surname", "Kowalski");
         $I->fillField("email", "foo@abc.pl");
         $I->selectOption('facility','F1');
         $I->selectOption('role','Recepcjonista');
         $I->fillField("password", "Qwerty1@3");
-        $I->fillField("password_repeat", "Qwerty1@3");
+        $I->fillField("repeat_password", "Qwerty1@3");
 
         $I->click("Załóż konto");
         $I->dontSee("Pole imię jest wymagane");
@@ -49,5 +68,9 @@ class Test03_RegisterCest
         $I->dontSee("Pole powtórz hasło jest wymagane");
 
         $I->seeInDatabase('users', ['email' => "foo@abc.pl"]);
+
+        $I->click("Użytkownicy");
+        $I->seeElement("a:contains('Jan')");
+        $I->seeElement("a:contains('Kowalski')");
     }
 }
