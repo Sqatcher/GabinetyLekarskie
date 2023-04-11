@@ -46,7 +46,10 @@ Route::get('/', function () {
     if ($user) {
         if ($user->role == 1)
         {
-            return view('dashboardAdmin')->with('user', $user);
+            $roomSchedules = \App\Models\Schedule::where('owner_type', 2)->get();
+            $userSchedules = \App\Models\Schedule::where('owner_type', 1)->get();
+
+            return view('dashboardAdmin')->with('user', $user)->with('roomSchedules', $roomSchedules)->with('userSchedules', $userSchedules);
         }
         return view('dashboard')->with('user', $user);
     }
