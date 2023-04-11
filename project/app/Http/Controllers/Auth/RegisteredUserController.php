@@ -40,6 +40,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
+            'name' => ['required'],
+            'surname' => ['required'],
             'role' => [ 'required' ],
             'facility' => ['required'],
             'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
@@ -58,6 +60,8 @@ class RegisteredUserController extends Controller
         ]);
 */
         $user = new User();
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email =  $request->email;
         $user->password =  Hash::make(strval($request['password']));
         $user->role = $request->role;
@@ -78,6 +82,8 @@ class RegisteredUserController extends Controller
 
         $user = User::find($id);
         if ($user != null) {
+            $user->name = $request->name;
+            $user->surname = $request->surname;
             $user->email = $request->email;
             $user->role = $request->role;
             $user->facility = $request->facility;

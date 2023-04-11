@@ -2,6 +2,20 @@
     <form method="POST" action="{{ url('create') }}">
         @csrf
 
+        <!-- Name -->
+        <div class="mt-4">
+            <x-input-label for="name" :value="__('Imię')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"  />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Surname -->
+        <div class="mt-4">
+            <x-input-label for="surname" :value="__('Nazwisko')" />
+            <x-text-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname')"  />
+            <x-input-error :messages="$errors->get('surname')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
@@ -34,6 +48,7 @@
                 <option value=3>Pracownik</option>
                 <option value=4>Księgowy</option>
                 <option value=5>Magazynier</option>
+                <option value=6>Recepcjonista</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
