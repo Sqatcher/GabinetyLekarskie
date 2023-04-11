@@ -44,6 +44,10 @@ use function PHPUnit\Framework\isNull;
 Route::get('/', function () {
     $user = Auth::user();
     if ($user) {
+        if ($user->role == 1)
+        {
+            return view('dashboardAdmin')->with('user', $user);
+        }
         return view('dashboard')->with('user', $user);
     }
     return view('welcome');
