@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 //use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
+use Illuminate\Validation\Validator;
 
 class RegisteredUserController extends Controller
 {
@@ -26,6 +28,11 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+    public function allusers(): View
+    {
+        return view('auth.allusers')->with('users', User::all());
+    }
+
     /**
      * Handle an incoming registration request.
      *
@@ -34,46 +41,68 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string',  'max:255'],
-            'surname' => ['required', 'string',  'max:255'],
+            'name' => ['required'],
+            'surname' => ['required'],
+            'role' => [ 'required' ],
+            'facility' => ['required'],
             'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
-            'nickname' => ['required', 'string',  'max:255', 'unique:'.User::class],
             'password' => ['required',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
-            'repeat_password' => ['required', 'same:password'],
-            'phone_number' => ['required', 'string', 'starts_with:+', 'regex:/^\+\d{11}$/'],
-            'person_number' => ['required', new PESELRule()], //, 'string', 'regex:/^[0-9]{11}$/'
-            'promo_code' => [],//['string'], //nwn co tutaj
-            'terms' => ['required', 'accepted'] //albo mozna boolean zamiast accepted
-
+            'repeat_password' => ['required', 'same:password']
+        ]);
+/*
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:8', 'confirmed'],
         ]);
 
-        //TODO sprawdzac czy jest promo_code i zmienic deposit na cos jesli jest (deposit ustawiam w create)
+        $validator->messages()->add('email.unique', 'This email address is already in use.');
 
+        if ($validator->fails()) {
+            return redirect('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+*/
+        $user = new User();
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email =  $request->email;
+        $user->password =  Hash::make(strval($request['password']));
+        $user->role = $request->role;
+        $user->facility = $request->facility;
+        $user->save();
 
-        //dd($request);
-        //jak to jeszcze zmienic,
-        //chyba musze pozamieniac wszystkie - na _
-        $user = User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'email' => $request->email,
-            'nickname' => $request->nickname,
-            'password' => Hash::make(strval($request['password'])),
-            'phone_number' => $request->phone_number,
-            'person_number' => $request->person_number,
-            'promo_code' => $request->promo_code,
-            'deposit' => 0,
-            'premium' => false,
-            'confirmed' => false
+        return Redirect::to('/');
+    }
+
+    public function edituser(int $id): View
+    {
+        $user = User::find($id);
+        return view('auth.edituser')->with('user', $user);
+    }
+
+    public function update(Request $request, int $id): RedirectResponse
+    {
+
+        $request->validate([
+            'name' => ['required'],
+            'surname' => ['required'],
+            'role' => [ 'required' ],
+            'facility' => ['required'],
         ]);
 
-        //cos takiego msuze dodac jak chce przejsc do innej strony przy regulaminie
-        //Route::get('/home', [HomeController::class, 'index'])->name('home');
+        $user = User::find($id);
+        if ($user != null) {
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->facility = $request->facility;
+            $user->save();
+        }
 
-        event(new Registered($user));
-
-        //Auth::login($user);
-        return redirect()->route('auth.confirm', ['_token' => $request['_token']])->with('user', $user);
+        return Redirect::to('/');
     }
 }
