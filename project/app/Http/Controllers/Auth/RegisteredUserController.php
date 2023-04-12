@@ -33,6 +33,14 @@ class RegisteredUserController extends Controller
         return view('auth.allusers')->with('users', User::all());
     }
 
+    public function schedules(): View
+    {
+        $roomSchedules = \App\Models\Schedule::where('owner_type', 2)->get();
+        $userSchedules = \App\Models\Schedule::where('owner_type', 1)->get();
+
+        return view('dashboardAdmin')->with('roomSchedules', $roomSchedules)->with('userSchedules', $userSchedules);
+    }
+
     /**
      * Handle an incoming registration request.
      *
