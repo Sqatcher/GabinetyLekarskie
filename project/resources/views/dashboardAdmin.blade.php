@@ -12,14 +12,15 @@
     function setRooms() {
         // page is now ready, initialize the calendar...
         $('#calendar').fullCalendar({
+            defaultView : 'agendaWeek',
             // put your options and callbacks here
             events : [
                     @foreach($roomSchedules as $task)
                 {
                     title : '{{ $task->schedule_owner }}',
                     backgroundColor : '{{ $array[$task->type] }}',
-                    start : '{{ date_format(date_create($task->date_start), "Y-m-d") }}',
-                    end : '{{ date_format(date_create($task->date_end), "Y-m-d") }}'
+                    start : '{{ date_format(date_create($task->date_start), "Y-m-dTH:i:s") }}',
+                    end : '{{ date_format(date_create($task->date_end), "Y-m-dTH:i:s") }}'
                 },
                 @endforeach
             ]
@@ -28,13 +29,14 @@
 
     function setUsers() {
         $('#calendar2').fullCalendar({
+            defaultView : 'agendaWeek',
             events : [
                     @foreach($userSchedules as $task)
                 {
                     title : '{{ $task->schedule_owner }}',
                     backgroundColor : '{{ $array[$task->type] }}',
-                    start : '{{ date_format(date_create($task->date_start), "Y-m-d") }}',
-                    end : '{{ date_format(date_create($task->date_end), "Y-m-d") }}'
+                    start : '{{ date_format(date_create($task->date_start), "Y-m-dTH:i:s") }}',
+                    end : '{{ date_format(date_create($task->date_end), "Y-m-dTH:i:s") }}'
                 },
                 @endforeach
             ]

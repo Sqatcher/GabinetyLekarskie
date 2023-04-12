@@ -18,6 +18,12 @@
                 </div>
                 @if (Auth::check() && Auth::user()->role == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('schedules')" :active="request()->routeIs('auth.schedules')">
+                        {{ __('Harmonogramy') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('register')" :active="request()->routeIs('auth.register')">
                         {{ __('Zarejestruj') }}
                     </x-nav-link>
