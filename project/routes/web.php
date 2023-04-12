@@ -1,26 +1,9 @@
 <?php
 
-
-use App\Http\Controllers\Account\AccountController;
-use App\Http\Controllers\Account\BalanceController;
-use App\Http\Controllers\Account\BuyPremiumController;
-use App\Http\Controllers\Account\DeleteAccountController;
-use App\Http\Controllers\Account\AccountHistoryController;
-use App\Http\Controllers\BetResultController;
-use App\Http\Controllers\BetsController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LiveBetsController;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\Auth\RegisterConfirmController;
-use App\Http\Controllers\ScratchController;
-use App\Http\Controllers\SpecialBetsController;
-use App\Models\BlikCode;
-use App\Models\Event;
-use App\Models\Odds;
-use App\Models\Bet;
-use App\Models\Premium;
-use App\Models\SpecialEvent;
 use App\Models\User;
 use Codeception\Events;
 use Illuminate\Http\Request;
@@ -70,6 +53,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("register");
     Route::post('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "store"])->name("register");
     Route::get('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("create");
+    Route::get('schedules', [\App\Http\Controllers\Auth\RegisteredUserController::class, "schedules"])->name("schedules");
     Route::get('allusers', [\App\Http\Controllers\Auth\RegisteredUserController::class, "allusers"])->name("allusers");
     Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
