@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto sm:px-6 lg:px-8" style="width: 900px">
+        <div class="mx-auto sm:px-6 lg:px-8" style="width: 1000px">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                 <div id="filter_form" style="margin-left: 20px;margin-top: 20px; margin-bottom: 20px;">
@@ -28,9 +28,10 @@
                         <select name="filter_role" id="filter_role" onchange="filter_role_select(this.value);">
                             <option value="all" @if (session('user_filter_role') == "all") selected @endif>wszystkie</option>
                             @if (isset($roles))
+                                <?php $names = array('Szef', 'Kierownik', 'Pracownik', 'Księgowy', 'Magazynier', 'Recepcjonista') ?>
                                 @foreach($roles as $role)
-                                    @if($role != 1)!
-                                    <option value="{{$role}}" @if (session('user_filter_role') == $role ) selected @endif>{{$role}}</option>
+                                    @if($role!=1)
+                                        <option value="{{$role}}" @if (session('user_filter_role') == $role ) selected @endif>{{$names[$role-1]}}</option>
                                     @endif
                                 @endforeach
                             @endif
@@ -61,7 +62,7 @@
                     if (isset($users)) {
                         echo $users->content();
                     }
-                    ?>
+                                ?>
                     {{--@foreach ($users as $user)
                         <tr>
                             <td class="px-6 py-4">

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
@@ -36,7 +35,7 @@ class Test07_ScheduleCest
         $I->see("Sale");
         $I->see("Pracownicy");
 
-        $I->seeElement("#calendar",);
+        $I->seeElement("#calendar", );
 
 
         $I->click("#RoomButton");
@@ -58,6 +57,5 @@ class Test07_ScheduleCest
         $I->click(".fc-today-button");
         $I->see("test_07_sala");
         $I->dontSee("test_07_pracownik");
-
     }
 }

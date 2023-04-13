@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
     {
         $facilities = array();
         $raw_facilities  = User::select('facility')->groupBy('facility')->get();
-        foreach($raw_facilities as $facility) {
+        foreach ($raw_facilities as $facility) {
             $facilities[] = $facility->facility;
         }
         $facilities = array_unique($facilities);
@@ -44,13 +44,13 @@ class RegisteredUserController extends Controller
 
         $roles = array();
         $raw_roles  = User::select('role')->groupBy('role')->get();
-        foreach($raw_roles as $role) {
+        foreach ($raw_roles as $role) {
             $roles[] = $role->role;
         }
         $roles = array_unique($roles);
 
         return view('auth.allusers')->with('users', $this->filter(new Request()))->with('facilities', $facilities)
-                ->with('roles',$roles);
+                ->with('roles', $roles);
         //return view('auth.allusers')->with('users', User::all());
     }
 
@@ -91,21 +91,21 @@ class RegisteredUserController extends Controller
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
             'repeat_password' => ['required', 'same:password']
         ]);
-/*
-        $validator = Validator::make($request->all(), [
-            'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'confirmed'],
-        ]);
+        /*
+                $validator = Validator::make($request->all(), [
+                    'name' => ['required'],
+                    'email' => ['required', 'email', 'unique:users'],
+                    'password' => ['required', 'min:8', 'confirmed'],
+                ]);
 
-        $validator->messages()->add('email.unique', 'This email address is already in use.');
+                $validator->messages()->add('email.unique', 'This email address is already in use.');
 
-        if ($validator->fails()) {
-            return redirect('register')
-                ->withErrors($validator)
-                ->withInput();
-        }
-*/
+                if ($validator->fails()) {
+                    return redirect('register')
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+        */
         $user = new User();
         $user->name = $request->name;
         $user->surname = $request->surname;
@@ -126,7 +126,6 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request, int $id): RedirectResponse
     {
-
         $request->validate([
             'name' => ['required'],
             'surname' => ['required'],

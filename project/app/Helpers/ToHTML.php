@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-trait toHTML
+trait ToHTML
 {
     public function userCollectionToHTML(Collection $users): string
     {
@@ -44,5 +44,4 @@ trait toHTML
                 ."</td>
             </tr>";
     }
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
@@ -26,7 +25,5 @@ class Test06_CannotEditAdminRoleCest
 
         $I->amOnPage("/edituser/1");
         $I->seeCurrentUrlEquals("/");
-
-
     }
 }
