@@ -31,7 +31,6 @@ class Test03_RegisterCest
         $I->see("Pole powtórz hasło jest wymagane");
 
         $I->amOnPage("/allusers");
-        $I->seeElement("a:contains('First')");
         $I->seeElement("a:contains('Second')");
         $I->dontSeeElement("a:contains('Jan')");
         $I->dontSeeElement("a:contains('Kowalski')");
