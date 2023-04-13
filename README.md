@@ -1,6 +1,6 @@
 # Gabinety Lekarskie
 
-## Uruchomienie-dev
+## Uruchomienie - dev
 
 1. Wejdz do glownego katalogu - "GabinetyLekarskie".
 2. Wpisz `source php.env`.
@@ -14,13 +14,13 @@ Aleternatywnie:
 4. Uruchom skrypt wpiszujac `./runserver.sh`.
 5. Otworz sobie nowe okno w terminalu, mozesz normalnie pracowac np. `source php.env`, a potem `run ide`.
 
-## Analizatory-dev
+## Analizatory - dev
 Po tym jak juz masz uruchomiony serwer, mozesz czy z to w terminalu php storm, czy zwyklym, wpisac `./analizatory.sh`. Styl zostanie automatycznie naprawiony, phpstan oraz cs-fixer zwroci odpowiednie komunikaty o bledach lub ich braku.
 
-## Test-coverage-dev
+## Test-coverage - dev
 Kiedy masz uruchomiony server, skorzystaj ze skryptu wpisujac `./test-coverage.sh` w glownym katalogu. Powinines otrzymac wyniki w konsoli oraz po 10 sekundach powinna otworzyc sie strona z plikiem html, gdzie takze mozesz przegladac informacje. Mozesz tam zobaczyc, ktore ile linii kodu jest pokrytych testami oraz ktore konkretnie. 
 
-## Tworzenie testów
+## Tworzenie testów - dev
 
 Aby utworzyć Acceptance test wpisz:
 ```
@@ -31,3 +31,11 @@ Aby sprawdzić działanie wpisz:
 ```
 vendor/bin/codecept run
 ```
+
+## Code-review sprawdzanie ręczne - dev
+
+Zrób u siebie w repozytorium najpierw `git checkout master` oraz `git pull`, następnie wpisz `git checkout <nazwa_branchy_do_sprawdzenia>`, a potem `git pull`. Teraz uruchom serwer, sprawdź czy zmiany są dobre, aby następnie móc jeszcze sprawdzić kod na stronie githuba (o ile wcześniej tego nie zrobiłeś) i dać approve albo odpowiedni komentarz przy pull-requeście
+
+## Tworzenie nowych featurów np. testów - dev
+
+Zrób u siebie w repozytrium `git checkout master`, a następnie `git pull`. Teraz wpisz `git branch <kod_twojego_taska_z_jiry>`, a następnie `git checkout <kod_twojego_taska_z_jiry`. Teraz możesz wykonać swoje zadanie. W trakcie możesz robić commity `git add .` oraz `git commit -m <krótki_opis>`. Kiedy już wykonasz swoje zadanie oraz dokonasz commitów, możesz zrobić `git checkout master`, `git pull`, `git checkout  <kod_twojego_taska_z_jiry>` i `git merge master`. Następnie rozwiązać konflikty, a jeśli ich nie ma to `git push`.
