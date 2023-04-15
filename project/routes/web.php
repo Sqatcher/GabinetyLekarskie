@@ -57,6 +57,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('allusers', [\App\Http\Controllers\Auth\RegisteredUserController::class, "allusers"])->name("allusers");
     Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
+    Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
 
 });
 

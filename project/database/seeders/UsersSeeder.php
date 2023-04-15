@@ -28,5 +28,13 @@ class UsersSeeder extends Seeder
             'role'=>2, //2 = kierownik
             'facility' => 2
         ]);
+        DB::table('users')->insert([
+            'name' => 'Adam',
+            'surname' => 'Doe',
+            'email' => 'adam.doe@email.com',
+            'password' => bcrypt('adamdoe'),
+            'role'=>4, //2 = kierownik
+            'facility' => 2
+        ]);
     }
 }
