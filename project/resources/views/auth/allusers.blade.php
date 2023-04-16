@@ -24,6 +24,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($users as $user)
+                        @if( (Auth::user()->role == 1  && $user->role != 1)||  (Auth::user()->role == 2 &&  Auth::user()->facility == $user->facility && $user->role != 2 && $user->role != 1))
                         <tr>
                             <td class="px-6 py-4">
                                 <a href="{{ url("edituser", $user->id) }}" class="text-indigo-600 hover:text-indigo-900">
@@ -39,6 +40,7 @@
                                     {{ $user->email }}
                             </td>
                         </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>

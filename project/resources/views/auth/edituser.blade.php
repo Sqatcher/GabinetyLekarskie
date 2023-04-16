@@ -24,6 +24,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        @if( Auth::user()->role == 1 )
         <!-- Facility -->
         <div>
             <label for="facility">Placówka:</label>
@@ -38,14 +39,16 @@
             </select>
             <x-input-error :messages="$errors->get('facility')" class="mt-2" />
         </div>
-
+        @endif
         <!-- Role -->
         <div>
             <label for="role">Rola:</label>
             <select name="role" id="role">
                 <option value="">--- Wybierz rolę ---</option>
                 <!-- <option value=1 selected>Admin</option> -->
+                @if( Auth::user()->role == 1 )
                 <option value=2 {{ $user->role == 2 ? 'selected' : '' }}>Kierownik</option>
+                @endif
                 <option value=3 {{ $user->role == 3 ? 'selected' : '' }}>Pracownik</option>
                 <option value=4 {{ $user->role == 4 ? 'selected' : '' }}>Księgowy</option>
                 <option value=5 {{ $user->role == 5 ? 'selected' : '' }}>Magazynier</option>
@@ -57,6 +60,14 @@
         <div class="flex items-center justify-end mt-4">
             <x-primary-button class="ml-4">
                 {{ __('Edytuj konto') }}
+            </x-primary-button>
+        </div>
+    </form>
+    <form action="{{url("delete", $user->id)}}" method="POST">
+        @csrf
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="ml-4 bg-red-500 hover:bg-red-600">
+                {{ __('Usuń') }}
             </x-primary-button>
         </div>
     </form>

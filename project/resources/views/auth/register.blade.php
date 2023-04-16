@@ -23,6 +23,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        @if( Auth::user()->role == 1 )
         <!-- Facility -->
         <div>
             <x-input-label for="placówka" :value="__('Placówka')" />
@@ -36,6 +37,7 @@
             </select>
             <x-input-error :messages="$errors->get('facility')" class="mt-2" />
         </div>
+        @endif
 
         <!-- Role -->
         <div>
@@ -43,7 +45,9 @@
             <select name="role" id="role">
                 <option value="">--- Wybierz rolę ---</option>
                 <!-- <option value=1 selected>Admin</option> -->
-                <option value=2>Kierownik</option>
+                @if( Auth::user()->role == 1 )
+                    <option value=2 >Kierownik</option>
+                @endif
                 <option value=3>Pracownik</option>
                 <option value=4>Księgowy</option>
                 <option value=5>Magazynier</option>
