@@ -34,6 +34,14 @@ class RegisteredUserController extends Controller
 
     public function allusers(): View
     {
+        session(["user_filter_search" => '%']);
+        // Uncomment if needed
+        /*
+        session(["user_filter_facility" => "all",
+            "user_filter_role" => "all",
+            "user_filter_search" => "%"]);
+        */
+
         $facilities = array();
         $raw_facilities  = User::select('facility')->groupBy('facility')->get();
         foreach ($raw_facilities as $facility) {
