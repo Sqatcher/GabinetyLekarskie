@@ -1,3 +1,5 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -6,7 +8,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto sm:px-6 lg:px-8" style="width: 1000px">
+        <div class="mx-auto sm:px-6 lg:px-8" style="width: 1030px">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                 <div id="filter_form" style="margin-left: 20px;margin-top: 20px; margin-bottom: 20px;">
@@ -87,9 +89,6 @@
         </div>
     </div>
 </x-app-layout>
-
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 <script type="text/javascript">
     $('#filter_search').on('keyup',function(){
