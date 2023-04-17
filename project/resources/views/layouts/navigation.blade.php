@@ -16,7 +16,7 @@
                         {{ __('Strona główna') }}
                     </x-nav-link>
                 </div>
-                @if (Auth::check() && Auth::user()->role == 1)
+                @if (Auth::check() && ( Auth::user()->role == 1 ||  Auth::user()->role == 2))
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('schedules')" :active="request()->routeIs('auth.schedules')">
                         {{ __('Harmonogramy') }}

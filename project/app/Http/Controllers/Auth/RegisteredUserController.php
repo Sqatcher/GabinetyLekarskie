@@ -89,41 +89,43 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required'],
-            'surname' => ['required'],
-            'role' => [ 'required' ],
-            'facility' => ['required'],
-            'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
-            'password' => ['required',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
-            'repeat_password' => ['required', 'same:password']
-        ]);
-        /*
-                $validator = Validator::make($request->all(), [
-                    'name' => ['required'],
-                    'email' => ['required', 'email', 'unique:users'],
-                    'password' => ['required', 'min:8', 'confirmed'],
-                ]);
-
-                $validator->messages()->add('email.unique', 'This email address is already in use.');
-
-                if ($validator->fails()) {
-                    return redirect('register')
-                        ->withErrors($validator)
-                        ->withInput();
-                }
-        */
+        if( Auth::user()->role == 1 ){
+            $request->validate([
+                'name' => ['required'],
+                'surname' => ['required'],
+                'role' => [ 'required' ],
+                'facility' => ['required'],
+                'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
+                'password' => ['required',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
+                'repeat_password' => ['required', 'same:password']
+            ]);
+        } else{
+            $request->validate([
+                'name' => ['required'],
+                'surname' => ['required'],
+                'role' => [ 'required' ],
+                'email' => ['required', 'string', 'max:255', 'unique:'.User::class, 'regex:/^.+@.+$/'],#Rule::unique('users', 'email')
+                'password' => ['required',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
+                'repeat_password' => ['required', 'same:password']
+            ]);
+        }
         $user = new User();
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email =  $request->email;
         $user->password =  Hash::make(strval($request['password']));
         $user->role = $request->role;
-        $user->facility = $request->facility;
+        if( Auth::user()->role == 1 ){
+            $user->facility = $request->facility;
+        } else{
+            $user->facility = Auth::user()->facility;
+        }
+
         $user->save();
 
-        return Redirect::to('/');
+        return Redirect::to('/allusers');
     }
 
     public function edituser(int $id): View
@@ -134,12 +136,20 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request, int $id): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required'],
-            'surname' => ['required'],
-            'role' => [ 'required' ],
-            'facility' => ['required'],
-        ]);
+        if (Auth::user()->role == 1) {
+            $request->validate([
+                'name' => ['required'],
+                'surname' => ['required'],
+                'role' => ['required'],
+                'facility' => ['required'],
+            ]);
+        } else{
+            $request->validate([
+                'name' => ['required'],
+                'surname' => ['required'],
+                'role' => ['required'],
+            ]);
+        }
 
         $user = User::find($id);
         if ($user != null) {
@@ -147,10 +157,22 @@ class RegisteredUserController extends Controller
             $user->surname = $request->surname;
             $user->email = $request->email;
             $user->role = $request->role;
-            $user->facility = $request->facility;
+            if (Auth::user()->role == 1) {
+                $user->facility = $request->facility;
+            }
             $user->save();
         }
-
-        return Redirect::to('/');
+        return Redirect::to('/allusers');
     }
+
+    public function delete(Request $request, int $id): RedirectResponse
+    {
+        $user = User::find($id);
+        if ($user!= null) {
+            $user->delete();
+        }
+        return Redirect::to('/allusers');
+    }
+
+
 }

@@ -26,7 +26,7 @@ class Test05_EditUserCest
         $I->selectOption('role', 'Magazynier');
         $I->click("Edytuj konto");
 
-        $I->seeCurrentUrlEquals("/");
+        $I->seeCurrentUrlEquals("/allusers");
         $I->click("Użytkownicy");
 
         $I->seeElement("a:contains('Piotr')");

@@ -57,6 +57,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/user/filter', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'filter'])->name('user.filter');
     Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
+
+    Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
+
 });
 
 

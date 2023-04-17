@@ -14,8 +14,8 @@ class Test04_DontSeeRegisterCest
 
         $I->dontSeeInDatabase('users', ['email' => "foo@abc.pl"]);
 
-        $I->fillField("email", "second.name@email.com");
-        $I->fillField("password", "second");
+        $I->fillField("email", "third.name@email.com");
+        $I->fillField("password", "third");
         $I->click("Zaloguj się");
 
         $I->dontSee("Zarejestruj");
