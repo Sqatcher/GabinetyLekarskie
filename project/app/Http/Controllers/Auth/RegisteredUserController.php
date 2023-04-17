@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\FilterHelper;
 use App\Helpers\PESELRule;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -9,6 +10,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 //use Illuminate\Support\Facades\Password;
@@ -20,6 +22,8 @@ use Illuminate\Validation\Validator;
 
 class RegisteredUserController extends Controller
 {
+    use FilterHelper;
+
     /**
      * Display the registration view.
      */
@@ -30,7 +34,44 @@ class RegisteredUserController extends Controller
 
     public function allusers(): View
     {
-        return view('auth.allusers')->with('users', User::all());
+        session(["user_filter_search" => '%']);
+        // Uncomment if needed
+        /*
+        session(["user_filter_facility" => "all",
+            "user_filter_role" => "all",
+            "user_filter_search" => "%"]);
+        */
+
+        $facilities = array();
+        $raw_facilities  = User::select('facility')->groupBy('facility')->get();
+        foreach ($raw_facilities as $facility) {
+            $facilities[] = $facility->facility;
+        }
+        $facilities = array_unique($facilities);
+
+
+        $roles = array();
+        $raw_roles  = User::select('role')->groupBy('role')->get();
+        foreach ($raw_roles as $role) {
+            $roles[] = $role->role;
+        }
+        $roles = array_unique($roles);
+
+        return view('auth.allusers')->with('users', $this->filter(new Request()))->with('facilities', $facilities)
+                ->with('roles', $roles);
+        //return view('auth.allusers')->with('users', User::all());
+    }
+
+    public function filter(Request $request): Response
+    {
+        $request->validate([
+            'filter_facility' => ['string'],
+            'filter_role' => ['string'],
+            'filter_search' => ['string'],
+        ]);
+
+        $type = 'user';
+        return $this->filterProcedure($request, $type);
     }
 
     public function schedules(): View
@@ -70,7 +111,6 @@ class RegisteredUserController extends Controller
                 'repeat_password' => ['required', 'same:password']
             ]);
         }
-
         $user = new User();
         $user->name = $request->name;
         $user->surname = $request->surname;
@@ -110,7 +150,6 @@ class RegisteredUserController extends Controller
                 'role' => ['required'],
             ]);
         }
-
 
         $user = User::find($id);
         if ($user != null) {

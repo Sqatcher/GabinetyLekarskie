@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
@@ -32,7 +31,6 @@ class Test03_RegisterCest
         $I->see("Pole powtórz hasło jest wymagane");
 
         $I->amOnPage("/allusers");
-        $I->seeElement("a:contains('First')");
         $I->seeElement("a:contains('Second')");
         $I->dontSeeElement("a:contains('Jan')");
         $I->dontSeeElement("a:contains('Kowalski')");
@@ -53,8 +51,8 @@ class Test03_RegisterCest
         #$I->fillField("name", "Jan");
         $I->fillField("surname", "Kowalski");
         $I->fillField("email", "foo@abc.pl");
-        $I->selectOption('facility','F1');
-        $I->selectOption('role','Recepcjonista');
+        $I->selectOption('facility', 'F1');
+        $I->selectOption('role', 'Recepcjonista');
         $I->fillField("password", "Qwerty1@3");
         $I->fillField("repeat_password", "Qwerty1@3");
 

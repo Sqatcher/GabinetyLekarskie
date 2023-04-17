@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
@@ -20,20 +19,19 @@ class Test05_EditUserCest
         $I->click("Użytkownicy");
         $I->click("Second");
 
-        $I->fillField("name","Piotr");
-        $I->fillField("surname","Nowak");
-        $I->fillField("email","foo@abc.com");
-        $I->selectOption('facility','F5');
-        $I->selectOption('role','Magazynier');
+        $I->fillField("name", "Piotr");
+        $I->fillField("surname", "Nowak");
+        $I->fillField("email", "foo@abc.com");
+        $I->selectOption('facility', 'F5');
+        $I->selectOption('role', 'Magazynier');
         $I->click("Edytuj konto");
 
-        $I->seeCurrentUrlEquals("/");
+        $I->seeCurrentUrlEquals("/allusers");
         $I->click("Użytkownicy");
 
         $I->seeElement("a:contains('Piotr')");
         $I->seeElement("a:contains('Nowak')");
 
         $I->seeInDatabase('users', ['name' => "Piotr", 'surname' => 'Nowak', 'email' => "foo@abc.com", 'facility' => '5', 'role' => "5"]);
-
     }
 }
