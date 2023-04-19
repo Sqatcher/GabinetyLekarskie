@@ -59,7 +59,6 @@ Route::middleware(['admin'])->group(function () {
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
 
     Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
-
 });
 
 

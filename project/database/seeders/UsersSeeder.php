@@ -60,6 +60,5 @@ class UsersSeeder extends Seeder
             'role'=>4, //2 = kierownik
             'facility' => 2
         ]);
-
     }
 }

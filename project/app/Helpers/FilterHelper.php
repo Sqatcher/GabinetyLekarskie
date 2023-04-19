@@ -6,10 +6,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 trait FilterHelper
 {
     use ToHTML;
+    use HasEnsure;
+
     public function filterProcedure(Request $request, string $type): Response
     {
         $collection = $this->filterHelper($request, $type);
@@ -42,17 +45,23 @@ trait FilterHelper
 
     private function getUsers(string $filter_facility, string $filter_role, string $filter_search): Collection
     {
+        $role_code = 2;
+        if ($this->ensureIsNotNullUser(Auth::user())->role==2) {
+            $filter_facility = Auth::user()->facility;
+            $role_code = 3;
+        }
+
         return User::where('name', 'like', '%'.$filter_search.'%')
-            ->where('role', '>=', 2)
+            ->where('role', '>=', $role_code)
             ->when($filter_facility != 'all', function ($query) use ($filter_facility) {
                 $query->where('facility', '=', $filter_facility);
             })
             ->when($filter_role != 'all', function ($query) use ($filter_role) {
                 $query->where('role', '=', $filter_role);
             })
-            ->orWhere(function ($query) use ($filter_search, $filter_facility, $filter_role) {
+            ->orWhere(function ($query) use ($filter_search, $filter_facility, $filter_role, $role_code) {
                 $query->where('surname', 'like', '%'.$filter_search.'%')
-                    ->where('role', '>=', 2)
+                    ->where('role', '>=', $role_code)
                     ->when($filter_facility != 'all', function ($query) use ($filter_facility) {
                         $query->where('facility', '=', $filter_facility);
                     })
@@ -60,9 +69,9 @@ trait FilterHelper
                         $query->where('role', '=', $filter_role);
                     });
             })
-            ->orWhere(function ($query) use ($filter_search, $filter_facility, $filter_role) {
+            ->orWhere(function ($query) use ($filter_search, $filter_facility, $filter_role, $role_code) {
                 $query->where('email', 'like', '%'.$filter_search.'%')
-                    ->where('role', '>=', 2)
+                    ->where('role', '>=', $role_code)
                     ->when($filter_facility != 'all', function ($query) use ($filter_facility) {
                         $query->where('facility', '=', $filter_facility);
                     })

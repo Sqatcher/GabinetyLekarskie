@@ -89,7 +89,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if( Auth::user()->role == 1 ){
+        if ($this->ensureIsNotNullUser(Auth::user())->role == 1) {
             $request->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
@@ -100,7 +100,7 @@ class RegisteredUserController extends Controller
                     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])(?=.{8,})/'],//Rules\Password::defaults()],
                 'repeat_password' => ['required', 'same:password']
             ]);
-        } else{
+        } else {
             $request->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
@@ -117,9 +117,9 @@ class RegisteredUserController extends Controller
         $user->email =  $request->email;
         $user->password =  Hash::make(strval($request['password']));
         $user->role = $request->role;
-        if( Auth::user()->role == 1 ){
+        if (Auth::user()->role == 1) {
             $user->facility = $request->facility;
-        } else{
+        } else {
             $user->facility = Auth::user()->facility;
         }
 
@@ -128,9 +128,16 @@ class RegisteredUserController extends Controller
         return Redirect::to('/allusers');
     }
 
-    public function edituser(int $id): View
+    public function edituser(int $id): View|RedirectResponse
     {
-        $user = User::find($id);
+        $user = $this->ensureIsNotNullUser(User::find($id));
+        if ($user->role == 1) {
+            return Redirect::to('/');
+        }
+        if ($this->ensureIsNotNullUser(Auth::user())->role == 2 and ($user->facility != $this->ensureIsNotNullUser(Auth::user())->facility or $user->role == 2)) {
+            return Redirect::to('/');
+        }
+
         return view('auth.edituser')->with('user', $user);
     }
 
@@ -143,7 +150,7 @@ class RegisteredUserController extends Controller
                 'role' => ['required'],
                 'facility' => ['required'],
             ]);
-        } else{
+        } else {
             $request->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
@@ -173,6 +180,4 @@ class RegisteredUserController extends Controller
         }
         return Redirect::to('/allusers');
     }
-
-
 }
