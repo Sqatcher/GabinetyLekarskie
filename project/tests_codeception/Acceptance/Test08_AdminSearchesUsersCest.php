@@ -8,7 +8,7 @@ class Test08_AdminSearchesUsersCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->haveInDatabase('users', array('name' => 'Jan', 'surname' => 'Nowak',
+        $I->haveInDatabase('users', array('name' => 'Janeek', 'surname' => 'Nowak',
             'email' => 'jan.nowak@email.com', 'password' => hash('md5', 'passWord'), 'role'=> 2,
             'facility' => 2));
         $I->haveInDatabase('users', array('name' => 'John', 'surname' => 'Smith',
@@ -30,49 +30,48 @@ class Test08_AdminSearchesUsersCest
         $I->click("Zaloguj się");
 
         $I->amOnPage("/allusers");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->see("John");
 
-        /*
+
         $I->fillField("filter_search", "j");
-        $I->submitForm();
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->see("John");
 
         $I->fillField("filter_search", "jA");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->dontSee("John");
 
         $I->fillField("filter_search", "");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->see("John");
-        */
+
 
         $I->selectOption("filter_facility", "1");
-        $I->dontSee("Jan");
+        $I->dontSee("Janeek");
         $I->see("John");
 
         $I->fillField("filter_search", "S");
-        $I->dontSee("Jan");
-        $I->dontSee("John");
+        $I->dontSee("Janeek");
+        $I->see("John");
 
         $I->selectOption("filter_facility", "wszystkie");
         $I->fillField("filter_search", "");
         $I->selectOption("filter_role", "Kierownik");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->dontSee("John");
 
         $I->selectOption("filter_facility", "2");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->dontSee("John");
 
         $I->selectOption("filter_facility", "1");
-        $I->dontSee("Jan");
+        $I->dontSee("Janeek");
         $I->dontSee("John");
 
         $I->amOnPage("/");
         $I->amOnPage("/allusers");
-        $I->see("Jan");
+        $I->see("Janeek");
         $I->see("John");
     }
 }
