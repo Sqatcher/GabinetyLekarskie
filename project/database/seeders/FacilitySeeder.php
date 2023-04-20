@@ -16,29 +16,29 @@ class FacilitySeeder extends Seeder
     public function run()
     {
         DB::table('facilities')->insert([
-        'name' => 'Kraków - Krowodrza',
-        'city' => "Kraków",
-        'adress' => "Koziołków 21",
+            'name' => 'Kraków - Krowodrza',
+            'city' => "Kraków",
+            'address' => "Koziołków 21",
         ]);
         DB::table('facilities')->insert([
             'name' => 'Kraków - Centrum',
             'city' => "Kraków",
-            'adress' => "Królików 37",
+            'address' => "Królików 37",
         ]);
         DB::table('facilities')->insert([
             'name' => 'Kraków - Podgórze',
             'city' => "Kraków",
-            'adress' => "Karpiów 40",
+            'address' => "Karpiów 40",
         ]);
         DB::table('facilities')->insert([
             'name' => 'Zielona Góra - Przylep',
             'city' => "Zielona Góra",
-            'adress' => "Zebr 20",
+            'address' => "Zebr 20",
         ]);
         DB::table('facilities')->insert([
             'name' => 'Zamość - Stare Miasto',
             'city' => "Zamość",
-            'adress' => "Zimorodka 8",
+            'address' => "Zimorodka 8",
         ]);
     }
 }
