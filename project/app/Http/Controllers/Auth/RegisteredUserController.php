@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
     {
         $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
 
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
             return Redirect::to('/');
         }
 
@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
 
     public function allusers(): View|RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
             return Redirect::to('/');
         }
 
@@ -65,8 +65,12 @@ class RegisteredUserController extends Controller
         $roles = array();
         $raw_users  = User::select('role')->groupBy('role')->get();
         foreach ($raw_users as $user) {
-            if($this->getRole($user->role)->users & 2) continue;
-            if($user_role->users & 4 and $this->getRole($user->role)->users & 4) continue;
+            if ($this->getRole($user->role)->users & 2) {
+                continue;
+            }
+            if ($user_role->users & 4 and $this->getRole($user->role)->users & 4) {
+                continue;
+            }
 
             $roles[] = $this->getRole($user->role);
         }
@@ -78,7 +82,7 @@ class RegisteredUserController extends Controller
 
     public function filter(Request $request): Response|RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
             return Redirect::to('/');
         }
 
@@ -94,7 +98,7 @@ class RegisteredUserController extends Controller
 
     public function schedules(): View|RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 1) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 1) {
             return Redirect::to('/');
         }
 
@@ -112,7 +116,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
             return Redirect::to('/');
         }
 
@@ -159,7 +163,7 @@ class RegisteredUserController extends Controller
     {
         $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
 
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
             return Redirect::to('/');
         }
 
@@ -170,18 +174,18 @@ class RegisteredUserController extends Controller
         if ($this->getRole($user->role)->users & 8) {
             return Redirect::to('/');
         }
-        if ( $this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 16 and
-            ($user->facility != $this->ensureIsNotNullUser(Auth::user())->facility or $this->getRole($user->role)->users & 16 )) {
+        if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 16 and
+            ($user->facility != $this->ensureIsNotNullUser(Auth::user())->facility or $this->getRole($user->role)->users & 16)) {
             return Redirect::to('/');
         }
 
         return view('auth.edituser')->with('user', $user)->with('user_role', $user_role)->with('roles', $roles)
-            ->with('facilities',$facilities);
+            ->with('facilities', $facilities);
     }
 
     public function update(Request $request, int $id): RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
             return Redirect::to('/');
         }
 
@@ -216,7 +220,7 @@ class RegisteredUserController extends Controller
 
     public function delete(Request $request, int $id): RedirectResponse
     {
-        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
             return Redirect::to('/');
         }
 

@@ -10,7 +10,7 @@ trait Get
     public function getRole(int $id): Role
     {
         $role = Role::find($id);
-        if($role == null) {
+        if ($role == null) {
             abort(500);
         }
         return $role;
@@ -19,7 +19,7 @@ trait Get
     public function getFacility(int $id): Facility
     {
         $facility = Facility::find($id);
-        if($facility == null) {
+        if ($facility == null) {
             abort(500);
         }
         return $facility;

@@ -68,7 +68,7 @@
                     if (isset($users)) {
                         echo $users->content();
                     }
-                                ?>
+                    ?>
                     {{--@foreach ($users as $user)
 /*
                     <tbody class="bg-white divide-y divide-gray-200">

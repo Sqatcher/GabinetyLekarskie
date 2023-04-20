@@ -33,6 +33,5 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('user_role', $this->getRole(Auth::user()->role));
             }
         );
-
     }
 }
