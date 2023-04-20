@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
