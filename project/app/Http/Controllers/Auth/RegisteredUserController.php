@@ -57,8 +57,10 @@ class RegisteredUserController extends Controller
         }
         $roles = array_unique($roles);
 
-        return view('auth.allusers')->with('users', $this->filter(new Request()))->with('facilities', $facilities)
-                ->with('roles', $roles);
+        return view('auth.allusers')
+            ->with('users', $this->filter(new Request()))
+            ->with('facilities', $facilities)
+            ->with('roles', $roles);
         //return view('auth.allusers')->with('users', User::all());
     }
 
