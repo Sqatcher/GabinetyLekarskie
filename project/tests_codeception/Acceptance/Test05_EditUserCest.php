@@ -22,7 +22,7 @@ class Test05_EditUserCest
         $I->fillField("name", "Piotr");
         $I->fillField("surname", "Nowak");
         $I->fillField("email", "foo@abc.com");
-        $I->selectOption('facility', 'F5');
+        $I->selectOption('facility', 'Zamość - Stare Miasto');
         $I->selectOption('role', 'Magazynier');
         $I->click("Edytuj konto");
 

@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto sm:px-6 lg:px-8" style="width: 1030px">
+        <div class="mx-auto sm:px-6 lg:px-8" style="width: 1130px">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                 <div id="filter_form" style="margin-left: 20px;margin-top: 20px; margin-bottom: 20px;">
@@ -17,33 +17,28 @@
                         <label for="filter_search">Wpisz imię, nazwisko lub email użytkownika</label>
                         <input type="text" class="form-controller" id="filter_search" name="filter_search" style="font-size: medium;"
                                value="{{  (session('user_filter_search') ?? "") == '%' ? '' :  (session('user_filter_search') ?? "") }}">
-                        @if(Auth::user()->role==2)
+                        @if($user_role->users & 8)
+                            <label for="filter_facility" style="margin-left: 10px;">Obiekt: </label>
+                            <select name="filter_facility" id="filter_facility" onchange="filter_facility_select(this.value);">
+                                <option value="all" @if (session('user_filter_facility') == "all") selected @endif>wszystkie</option>
+                                @if (isset($facilities))
+                                    @foreach($facilities as $facility)
+                                        <option value="{{$facility->id}}" @if (session('user_filter_facility') == $facility->id ) selected @endif>{{$facility->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        @else
                             <label for="filter_facility" style="margin-left: 10px;" hidden>Obiekt: </label>
                             <select name="filter_facility" id="filter_facility" onchange="filter_facility_select(thisno.value);" hidden>
                                 <option value="{{Auth::user()->facility}}" selected>wszystkie</option>
                             </select>
-                        @else
-                            <label for="filter_facility" style="margin-left: 10px;">Obiekt: </label>
-                        <select name="filter_facility" id="filter_facility" onchange="filter_facility_select(this.value);">
-                            <option value="all" @if (session('user_filter_facility') == "all") selected @endif>wszystkie</option>
-                            @if (isset($facilities))
-                                @foreach($facilities as $facility)
-                                    <option value="{{$facility}}" @if (session('user_filter_facility') == $facility ) selected @endif>{{$facility}}</option>
-                                @endforeach
-                            @endif
-                        </select>
                         @endif
                         <label for="filter_role" style="margin-left: 10px;">Rola:</label>
                         <select name="filter_role" id="filter_role" onchange="filter_role_select(this.value);">
                             <option value="all" @if (session('user_filter_role') == "all") selected @endif>wszystkie</option>
                             @if (isset($roles))
-                                <?php $names = array('Szef', 'Kierownik', 'Pracownik', 'Księgowy', 'Magazynier', 'Recepcjonista') ?>
                                 @foreach($roles as $role)
-                                    @if($role!=1)
-                                        @if(($role!=2 or Auth::user()->role!=2))
-                                            <option value="{{$role}}" @if (session('user_filter_role') == $role ) selected @endif>{{$names[$role-1]}}</option>
-                                        @endif
-                                    @endif
+                                    <option value="{{$role->id}}" @if (session('user_filter_role') == $role->id ) selected @endif>{{$role->name}}</option>
                                 @endforeach
                             @endif
                         </select>

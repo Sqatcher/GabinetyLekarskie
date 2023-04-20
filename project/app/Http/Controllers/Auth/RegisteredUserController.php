@@ -3,37 +3,47 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Helpers\FilterHelper;
-use App\Helpers\PESELRule;
+use App\Helpers\Get;
 use App\Http\Controllers\Controller;
+use App\Models\Facility;
+use App\Models\Role;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-//use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rules;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
-use Illuminate\Validation\Validator;
 
 class RegisteredUserController extends Controller
 {
     use FilterHelper;
+    use Get;
 
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
-        return view('auth.register');
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
+            return Redirect::to('/');
+        }
+
+        $roles = Role::get();
+        $facilities = Facility::get();
+
+        return view('auth.register')->with('user_role', $user_role)->with('roles', $roles)->with('facilities', $facilities);
     }
 
-    public function allusers(): View
+    public function allusers(): View|RedirectResponse
     {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
+            return Redirect::to('/');
+        }
+
         session(["user_filter_search" => '%']);
         // Uncomment if needed
         /*
@@ -43,27 +53,35 @@ class RegisteredUserController extends Controller
         */
 
         $facilities = array();
-        $raw_facilities  = User::select('facility')->groupBy('facility')->get();
-        foreach ($raw_facilities as $facility) {
-            $facilities[] = $facility->facility;
+        $raw_users  = User::select('facility')->groupBy('facility')->get();
+        foreach ($raw_users as $user) {
+            $facilities[] = $this->getFacility($user->facility);
         }
         $facilities = array_unique($facilities);
 
 
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
         $roles = array();
-        $raw_roles  = User::select('role')->groupBy('role')->get();
-        foreach ($raw_roles as $role) {
-            $roles[] = $role->role;
+        $raw_users  = User::select('role')->groupBy('role')->get();
+        foreach ($raw_users as $user) {
+            if($this->getRole($user->role)->users & 2) continue;
+            if($user_role->users & 4 and $this->getRole($user->role)->users & 4) continue;
+
+            $roles[] = $this->getRole($user->role);
         }
         $roles = array_unique($roles);
 
         return view('auth.allusers')->with('users', $this->filter(new Request()))->with('facilities', $facilities)
-                ->with('roles', $roles);
-        //return view('auth.allusers')->with('users', User::all());
+                ->with('roles', $roles)->with('user_role', $user_role);
     }
 
-    public function filter(Request $request): Response
+    public function filter(Request $request): Response|RedirectResponse
     {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
+            return Redirect::to('/');
+        }
+
         $request->validate([
             'filter_facility' => ['string'],
             'filter_role' => ['string'],
@@ -74,8 +92,13 @@ class RegisteredUserController extends Controller
         return $this->filterProcedure($request, $type);
     }
 
-    public function schedules(): View
+    public function schedules(): View|RedirectResponse
     {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 1) {
+            return Redirect::to('/');
+        }
+
+        /* To do: role management */
         $roomSchedules = \App\Models\Schedule::where('owner_type', 2)->get();
         $userSchedules = \App\Models\Schedule::where('owner_type', 1)->get();
 
@@ -89,7 +112,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if ($this->ensureIsNotNullUser(Auth::user())->role == 1) {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 6)) {
+            return Redirect::to('/');
+        }
+
+        if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 2) {
             $request->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
@@ -117,10 +144,10 @@ class RegisteredUserController extends Controller
         $user->email =  $request->email;
         $user->password =  Hash::make(strval($request['password']));
         $user->role = $request->role;
-        if (Auth::user()->role == 1) {
+        if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 2) {
             $user->facility = $request->facility;
         } else {
-            $user->facility = Auth::user()->facility;
+            $user->facility = $this->ensureIsNotNullUser(Auth::user())->facility;
         }
 
         $user->save();
@@ -130,20 +157,35 @@ class RegisteredUserController extends Controller
 
     public function edituser(int $id): View|RedirectResponse
     {
-        $user = $this->ensureIsNotNullUser(User::find($id));
-        if ($user->role == 1) {
-            return Redirect::to('/');
-        }
-        if ($this->ensureIsNotNullUser(Auth::user())->role == 2 and ($user->facility != $this->ensureIsNotNullUser(Auth::user())->facility or $user->role == 2)) {
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
             return Redirect::to('/');
         }
 
-        return view('auth.edituser')->with('user', $user);
+        $user = $this->ensureIsNotNullUser(User::find($id));
+        $roles = Role::get();
+        $facilities = Facility::get();
+
+        if ($this->getRole($user->role)->users & 8) {
+            return Redirect::to('/');
+        }
+        if ( $this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 16 and
+            ($user->facility != $this->ensureIsNotNullUser(Auth::user())->facility or $this->getRole($user->role)->users & 16 )) {
+            return Redirect::to('/');
+        }
+
+        return view('auth.edituser')->with('user', $user)->with('user_role', $user_role)->with('roles', $roles)
+            ->with('facilities',$facilities);
     }
 
     public function update(Request $request, int $id): RedirectResponse
     {
-        if (Auth::user()->role == 1) {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
+            return Redirect::to('/');
+        }
+
+        if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 8) {
             $request->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
@@ -164,7 +206,7 @@ class RegisteredUserController extends Controller
             $user->surname = $request->surname;
             $user->email = $request->email;
             $user->role = $request->role;
-            if (Auth::user()->role == 1) {
+            if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 8) {
                 $user->facility = $request->facility;
             }
             $user->save();
@@ -174,6 +216,10 @@ class RegisteredUserController extends Controller
 
     public function delete(Request $request, int $id): RedirectResponse
     {
+        if(!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
+            return Redirect::to('/');
+        }
+
         $user = User::find($id);
         if ($user!= null) {
             $user->delete();

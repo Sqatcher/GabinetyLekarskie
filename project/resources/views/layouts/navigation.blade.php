@@ -16,19 +16,25 @@
                         {{ __('Strona główna') }}
                     </x-nav-link>
                 </div>
-                @if (Auth::check() && ( Auth::user()->role == 1 ||  Auth::user()->role == 2))
+
+                {{--@if (Auth::check() && ( Auth::user()->role == 1 ||  Auth::user()->role == 2))--}}
+                @if($user_role->schedules & 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('schedules')" :active="request()->routeIs('auth.schedules')">
                         {{ __('Harmonogramy') }}
                     </x-nav-link>
                 </div>
+                @endif
 
+                @if($user_role->users & 6)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('register')" :active="request()->routeIs('auth.register')">
                         {{ __('Zarejestruj') }}
                     </x-nav-link>
                 </div>
+                @endif
 
+                @if($user_role->users & 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('allusers')" :active="request()->routeIs('auth.allusers')">
                         {{ __('Użytkownicy') }}
