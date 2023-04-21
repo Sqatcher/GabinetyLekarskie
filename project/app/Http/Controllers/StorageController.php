@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FilterItemHelper;
+use App\Helpers\Get;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Item;
 use App\Models\User;
@@ -16,12 +17,20 @@ use Illuminate\View\View;
 class StorageController extends Controller
 {
     use FilterItemHelper;
+    use Get;
 
     /**
      * Display the storage.
      */
-    public function show(Request $request): View
+    //to jest tak jakby allusers
+    public function show(Request $request): View | RedirectResponse
     {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
+            return Redirect::to('/');
+        }
+
+        session(["user_filter_search" => '%']);
+
         $facilities = array();
         $raw_facilities  = User::select('facility')->groupBy('facility')->get();
         foreach ($raw_facilities as $facility) {
@@ -34,8 +43,12 @@ class StorageController extends Controller
             ->with('items', $this->filter(new Request()));
     }
 
-    public function filter(Request $request): Response
+    public function filter(Request $request): RedirectResponse | Response
     {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
+            return Redirect::to('/');
+        }
+
         $request->validate([
             'filter_facility' => ['string'],
             'filter_search' => ['string'],
