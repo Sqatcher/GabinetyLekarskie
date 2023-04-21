@@ -25,16 +25,16 @@ class StorageController extends Controller
     //to jest tak jakby allusers
     public function show(Request $request): View | RedirectResponse
     {
-        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
+        /*if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
             return Redirect::to('/');
-        }
+        }*/
 
         session(["user_filter_search" => '%']);
 
         $facilities = array();
-        $raw_facilities  = User::select('facility')->groupBy('facility')->get();
-        foreach ($raw_facilities as $facility) {
-            $facilities[] = $facility->facility;
+        $raw_users  = User::select('facility')->groupBy('facility')->get();
+        foreach ($raw_users as $user) {
+            $facilities[] = $this->getFacility($user->facility);
         }
         $facilities = array_unique($facilities);
 
@@ -45,9 +45,9 @@ class StorageController extends Controller
 
     public function filter(Request $request): RedirectResponse | Response
     {
-        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
+        /*if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
             return Redirect::to('/');
-        }
+        }*/
 
         $request->validate([
             'filter_facility' => ['string'],

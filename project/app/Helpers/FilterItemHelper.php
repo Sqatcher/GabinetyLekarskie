@@ -19,7 +19,7 @@ trait FilterItemHelper
         $collection = $this->filterHelper($request, $type);
 
         return match ($type) {
-            'item' => Response($this->itemCollectionToHTML($collection)),
+            'item' => Response($this->itemCollectionToHTMLst($collection)),
             default => Response('<h2>Filter problem in filter procedure</h2>'),
         };
     }

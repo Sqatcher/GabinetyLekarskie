@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 trait ToHTMLstorage
 {
-    public function itemCollectionToHTML(Collection $items): string
+    public function itemCollectionToHTMLst(Collection $items): string
     {
         $output = '';
         if (count($items) > 0) {

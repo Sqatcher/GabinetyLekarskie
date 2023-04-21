@@ -62,6 +62,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
 });
 
-
-
 require __DIR__.'/auth.php';

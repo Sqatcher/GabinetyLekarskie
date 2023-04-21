@@ -25,7 +25,7 @@
                         <select name="filter_facility" id="filter_facility" onchange="filter_facility_select(this.value);">
                             @if (isset($facilities))
                                 @foreach($facilities as $facility)
-                                    <option value="{{$facility}}" @if (session('item_filter_facility') == $facility) selected @endif>{{$facility}}</option>
+                                    <option value="{{$facility->id}}" @if (session('item_filter_facility') == $facility->id) selected @endif>{{$facility->name}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -52,7 +52,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="usersTable">
+                    <tbody class="bg-white divide-y divide-gray-200" id="itemsTable">
                     <?php
                     if (isset($items)) {
                         echo $items->content();
@@ -81,9 +81,7 @@
             }
         });
     })
-</script>
 
-<script type="text/javascript">
     function filter_facility_select(val)
     {
         $.ajax({
@@ -97,21 +95,19 @@
             }
         });
     }
-</script>
 
-<script type="text/javascript">
     function reset()
     {
         $.ajax({
             type: 'get',
             url: '{{URL::to('/storage/filter')}}',
             data: {
-                'filter_facility' : '1',
+                'filter_facility' : {{Auth::user()->facility}},
                 'filter_search':'%',
             },
             success: function (data) {
                 $('#itemsTable').html(data);
-                document.getElementById('filter_facility').value ='1';
+                document.getElementById('filter_facility').value = {{Auth::user()->facility}};
                 document.getElementById('filter_search').value ='';
             }
         });
