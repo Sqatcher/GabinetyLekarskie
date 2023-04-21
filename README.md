@@ -1,5 +1,7 @@
 # Gabinety Lekarskie
 
+Na końcu została dodana nowa notka - korzystanie z uprawnień. Warto przeczytać przed byciem devem.
+
 ## Uruchomienie - dev
 
 1. Wejdz do glownego katalogu - "GabinetyLekarskie".
@@ -42,3 +44,51 @@ Zrób u siebie w repozytrium `git checkout master`, a następnie `git pull`. Ter
 
 ### Łatwiejsza wersja tworzenia nowych featurów np. story - dev
 `git checkout master`, a następnie `git pull`. Jak klikniesz w story na jirze, to po prawej stronie w sekcji programowanie powinno być napisane "utwórz gałąź". Jak na to najedziesz to na prawo od tej nazwy będzie strzałka, możesz na nią kliknąć i wyświetli Ci się komenda, która utworzy gałąź. Wklejasz ją do siebie do terminala. Następnie tworzysz kod, robisz commita (`git add .` oraz `git commit -m <krótki_opis>`), jak skończysz możesz zrobić `git push`. Tam może ci się wyświetlić informacja, że należy uzupełnić tę komendę o flagę --set-upstream. Tam w komunikacie będzie napisane co należy dokładnie wpisać. Na stronie możesz otworzyć pull requesta, a konflikty rozwiązać w web editorze. Jeśli rozwiązujesz konflikty w web editorze musisz od razu wszystkie rozwiązać.
+
+## Korzystanie z uprawnień - dev
+Dlaczego to robimy? W przypadku gdy mamy 6 ról jeszcze na upartego można wszędzie wstawiać ify i elsy.\
+Jeśli chcemy dać adminowi możliwość zarządzania tym co dana rola może robić - należy już utworzyć jakąś strukturę danych.\
+Jeśli chcemy dać możliwość rozwoju w przyszłości - należy skorzystać z jakiejś struktury danych dla roli.\
+Czy są lepsze rozwiązania? Pewnie tak np. po prostu gotowy pakiet laravelowy do zarządzania rolami...
+
+Każda rola posiada swoje uprawnienia w kontekście różnych widoków. Domyślne wartości to:\
+1 - mogę zobaczyć stronę danego modelu\
+2 - mogę stworzyć dany model jak chcę\
+4 - mogę stworzyć dany model w **swojej placówce**\
+8 - mogę edytować i usunąć dany model jak chcę\
+16 - mogę edytować dany i usunąć model w **swojej placówce**\
+32, 64, ... - niezagospodarowane. Można za ich pomocą np. rozbić na różne widoki strony.\
+
+W kontrole który edytujesz zaimportuj helper get:\
+```
+class RegisteredUserController extends Controller
+{
+    use Get;
+    ...
+    ...
+    ...
+```
+
+Teraz wystarczy tylko w odpowiednich miejscach korzystać z wyrażeń typu:
+```
+ if( $this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)
+ ```
+ Lub w uproszczonej wersji:
+ ```
+if( $this->getRole(Auth::user()->role)->users & 24)
+```
+Gdzie:\
+`->users` wskazuje w jakim zakresie sprawdzamy uprawnienia\
+`24` to suma uprawnień, w tym przypadku do edycji modelu w obu trybach.
+
+### Jeszcze troszkę o korzystaniu z uprawnień
+Aby mieć dostęp do ról oraz uprawnień użytkownika w widoku korzystamy po prostu z następującego wyrażenia
+```
+$user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+$roles = Role::get();
+...
+...
+...
+return view('nazwa.widoku')->with('user_role', $user_role)->with('roles', $roles)
+```
+

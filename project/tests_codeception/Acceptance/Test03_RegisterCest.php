@@ -51,7 +51,7 @@ class Test03_RegisterCest
         #$I->fillField("name", "Jan");
         $I->fillField("surname", "Kowalski");
         $I->fillField("email", "foo@abc.pl");
-        $I->selectOption('facility', 'F1');
+        $I->selectOption('facility', 'Kraków - Krowodrza');
         $I->selectOption('role', 'Recepcjonista');
         $I->fillField("password", "Qwerty1@3");
         $I->fillField("repeat_password", "Qwerty1@3");

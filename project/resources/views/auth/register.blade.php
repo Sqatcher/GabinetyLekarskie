@@ -23,20 +23,20 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        @if( Auth::user()->role == 1 )
-        <!-- Facility -->
-        <div>
-            <x-input-label for="placówka" :value="__('Placówka')" />
-            <select name="facility" id="facility">
-                <option name="facility" value="">--- Wybierz placówkę ---</option>
-                <option value=1>F1</option>
-                <option value=2>F2</option>
-                <option value=3>F3</option>
-                <option value=4>F4</option>
-                <option value=5>F5</option>
-            </select>
-            <x-input-error :messages="$errors->get('facility')" class="mt-2" />
-        </div>
+        @if( $user_role->users & 2)
+            @if(isset($facilities))
+                <!-- Facility -->
+                <div>
+                    <x-input-label for="placówka" :value="__('Placówka')" />
+                    <select name="facility" id="facility">
+                    <option name="facility" value="">--- Wybierz placówkę ---</option>
+                        @foreach($facilities as $facility)
+                            <option value={{$facility->id}}>{{$facility->name}}</option>
+                        @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('facility')" class="mt-2" />
+            </div>
+            @endif
         @endif
 
         <!-- Role -->
@@ -45,13 +45,13 @@
             <select name="role" id="role">
                 <option value="">--- Wybierz rolę ---</option>
                 <!-- <option value=1 selected>Admin</option> -->
-                @if( Auth::user()->role == 1 )
-                    <option value=2 >Kierownik</option>
-                @endif
-                <option value=3>Pracownik</option>
-                <option value=4>Księgowy</option>
-                <option value=5>Magazynier</option>
-                <option value=6>Recepcjonista</option>
+                @foreach($roles as $role)
+                    @if(!($role->users & 2))
+                        @if(!($role->users & 4) or !($user_role->users & 4))
+                            <option value={{$role->id}} >{{$role->name}}</option>
+                        @endif
+                    @endif
+                @endforeach
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>

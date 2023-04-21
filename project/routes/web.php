@@ -48,7 +48,7 @@ Route::middleware(['auth','verified'])->group(function () {
 
 
 
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("register");
     Route::post('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "store"])->name("register");
     Route::get('create', [\App\Http\Controllers\Auth\RegisteredUserController::class, "create"])->name("create");
