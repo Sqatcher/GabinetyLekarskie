@@ -172,6 +172,7 @@ return [
     */
 
     'attributes' => [ 'facility' => 'placówka', 'role' => 'rola',
-        'name' => 'imię', 'surname' => 'nazwisko', 'password' => 'hasło', 'repeat_password' => 'powtórz hasło'] ,
+        'name' => 'imię', 'surname' => 'nazwisko', 'password' => 'hasło', 'repeat_password' => 'powtórz hasło',
+        "current_password" => "Aktualne hasło"] ,
 
 ];

@@ -14,21 +14,21 @@
         @method('put')
 
         <div>
-            <x-input-label for="aktualne_hasło" :value="__('Aktualne hasło')" />
-            <x-text-input id="aktualne_hasło" name="aktualne_hasło" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('aktualne_hasło')" class="mt-2" />
+            <x-input-label for="current_password" :value="__('Aktualne hasło')" />
+            <x-text-input id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="hasło" :value="__('Nowe hasło')" />
-            <x-text-input id="hasło" name="hasło" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('hasło')" class="mt-2" />
+            <x-input-label for="password" :value="__('Nowe hasło')" />
+            <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="powtórz_hasło" :value="__('Powtórz hasło')" />
-            <x-text-input id="powtórz_hasło" name="powtórz_hasło" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('powtórz_hasło')" class="mt-2" />
+            <x-input-label for="repeat_password" :value="__('Powtórz hasło')" />
+            <x-text-input id="repeat_password" name="repeat_password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('repeat_password')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">
