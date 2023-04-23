@@ -25,11 +25,12 @@ class StorageController extends Controller
     //to jest tak jakby allusers
     public function show(Request $request): View | RedirectResponse
     {
-        /*if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users) & 1) {
+//      Jak nie ma dostępu do widoku swojej, czyli tak na prawdę w ogóle to wywalamy
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->storage) & 1) {
             return Redirect::to('/');
-        }*/
+        }
 
-        session(["user_filter_search" => '%']);
+        session(["item_filter_search" => '%']);
 
         $facilities = array();
         $raw_users  = User::select('facility')->groupBy('facility')->get();
@@ -38,16 +39,20 @@ class StorageController extends Controller
         }
         $facilities = array_unique($facilities);
 
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
         return view('auth.storage')
             ->with('facilities', $facilities)
-            ->with('items', $this->filter(new Request()));
+            ->with('items', $this->filter(new Request()))
+            ->with('user_role', $user_role);
     }
 
     public function filter(Request $request): RedirectResponse | Response
     {
-        /*if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 1)) {
+//      Jak nie ma dostępu do widoku swojej, czyli tak na prawdę w ogóle to wywalamy
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->storage & 1)) {
             return Redirect::to('/');
-        }*/
+        }
 
         $request->validate([
             'filter_facility' => ['string'],

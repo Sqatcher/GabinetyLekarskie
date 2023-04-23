@@ -19,8 +19,8 @@
 
                         <input type="text" class="form-controller" id="filter_search" name="filter_search" style="font-size: medium;"
                                value="{{  (session('item_filter_search') ?? "") == '%' ? '' :  (session('item_filter_search') ?? "") }}">
-
-
+{{--                    Czyli, że flaga jest do zobaczenia innych placówek xdd--}}
+                        @if($user_role->storage & 2)
                         <label for="filter_facility" style="margin-left: 10px;">Obiekt: </label>
                         <select name="filter_facility" id="filter_facility" onchange="filter_facility_select(this.value);">
                             @if (isset($facilities))
@@ -29,6 +29,7 @@
                                 @endforeach
                             @endif
                         </select>
+                        @endif
                         <br><br>
                     </form>
 

@@ -42,12 +42,13 @@
                 </div>
                 @endif
 
-{{--                zostawię to dla każdego użytkownika, bo wydaje mi się, że każdemu to się przyda (sprawdzić co jest dostępne, a co nie)  --}}
+                @if($user_role->users & 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('storage')" :active="request()->routeIs('auth.storage')">
                         {{ __('Magazyn') }}
                     </x-nav-link>
                 </div>
+                @endif
 
 
 <!--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
