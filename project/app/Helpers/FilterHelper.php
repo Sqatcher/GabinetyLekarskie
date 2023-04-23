@@ -49,17 +49,18 @@ trait FilterHelper
     {
         $raw_roles = Role::get();
         foreach ($raw_roles as $role) {
-            if(!($role->users & 8))
+            if (!($role->users & 8)) {
                 $roles[] = $role;
+            }
         }
         if ($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 16) {
             $filter_facility = $this->ensureIsNotNullUser(Auth::user())->facility;
             foreach ($roles as $role) {
-                if(!($role->users & 16))
-                $final_roles[] = $role->id;
+                if (!($role->users & 16)) {
+                    $final_roles[] = $role->id;
+                }
             }
-        }
-        else {
+        } else {
             foreach ($roles as $role) {
                 $final_roles[] = $role->id;
             }
