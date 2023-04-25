@@ -57,8 +57,56 @@ class UsersSeeder extends Seeder
             'surname' => 'Doe',
             'email' => 'adam.doe@email.com',
             'password' => bcrypt('adamdoe'),
-            'role'=>4, //2 = kierownik
+            'role'=>4,
             'facility' => 2
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'surname' => 'Istrator',
+            'email' => 'administrator@email.com',
+            'password' => bcrypt('administrator'),
+            'role'=>1,
+            'facility' => 1
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Kier',
+            'surname' => 'Ownik',
+            'email' => 'kierownik@email.com',
+            'password' => bcrypt('kierownik'),
+            'role'=>2,
+            'facility' => 1
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Praco',
+            'surname' => 'Wnik',
+            'email' => 'pracownik@email.com',
+            'password' => bcrypt('pracownik'),
+            'role'=>3,
+            'facility' => 1
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Ksie',
+            'surname' => 'Gowy',
+            'email' => 'ksiegowy@email.com',
+            'password' => bcrypt('ksiegowy'),
+            'role'=>4,
+            'facility' => 1
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Maga',
+            'surname' => 'Zynier',
+            'email' => 'magazynier@email.com',
+            'password' => bcrypt('magazynier'),
+            'role'=>5,
+            'facility' => 1
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Recep',
+            'surname' => 'Cjonista',
+            'email' => 'recepcjonista@email.com',
+            'password' => bcrypt('recepcjonista'),
+            'role'=>6,
+            'facility' => 1
         ]);
     }
 }

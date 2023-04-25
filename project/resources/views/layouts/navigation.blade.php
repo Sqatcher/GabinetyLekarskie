@@ -42,6 +42,14 @@
                 </div>
                 @endif
 
+                @if($user_role->storage & 1)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('storage')" :active="request()->routeIs('auth.storage')">
+                        {{ __('Magazyn') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
 
 <!--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <a href="/register" class="mt-4">Register</a>

@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->string("name");
             $table->integer("users"); // 1 - see users, 2 - create users, 4 - create users only in facility, 8 - edit and delete users, 16 - edit and delete users in facility
             $table->integer("schedules"); // 1 - see, 2 - create, 4 - create only in facility, 8 - edit and deleter, 16 - edit and delete is facility
+            $table->integer("storage"); // 1 - see your facility's items, 2 - see other facilities' items, 4 - edit items only in your facility, 8 - edit items in other facilities
         });
     }
 

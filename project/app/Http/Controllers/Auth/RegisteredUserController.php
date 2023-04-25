@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Helpers\FilterHelper;
+use App\Helpers\PESELRule;
 use App\Helpers\Get;
 use App\Http\Controllers\Controller;
 use App\Models\Facility;
 use App\Models\Role;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
+use Illuminate\Validation\Validator;
 
 class RegisteredUserController extends Controller
 {
@@ -76,8 +82,11 @@ class RegisteredUserController extends Controller
         }
         $roles = array_unique($roles);
 
-        return view('auth.allusers')->with('users', $this->filter(new Request()))->with('facilities', $facilities)
-                ->with('roles', $roles)->with('user_role', $user_role);
+        return view('auth.allusers')
+            ->with('users', $this->filter(new Request()))
+            ->with('facilities', $facilities)
+            ->with('roles', $roles)
+            ->with('user_role', $user_role);
     }
 
     public function filter(Request $request): Response|RedirectResponse

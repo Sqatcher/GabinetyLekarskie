@@ -92,3 +92,7 @@ $roles = Role::get();
 return view('nazwa.widoku')->with('user_role', $user_role)->with('roles', $roles)
 ```
 
+### Nowi użytkownicy
+Można teraz logować się trochę prościej, np:
+magazynier@email.com, magazynier
+kierownik@email.com, kierownik
