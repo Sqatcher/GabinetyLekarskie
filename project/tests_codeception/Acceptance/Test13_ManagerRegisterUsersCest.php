@@ -41,4 +41,3 @@ class Test13_ManagerRegisterUsersCest
         $I->see("Kasprowicz");
     }
 }
-
