@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
     Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
+    Route::post('update_item/{id}', [\App\Http\Controllers\StorageController::class, "update"])->name('update');
 });
 
 require __DIR__.'/auth.php';

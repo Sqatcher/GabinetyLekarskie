@@ -62,4 +62,24 @@ class StorageController extends Controller
         $type = 'item';
         return $this->filterProcedure($request, $type);
     }
+
+    public function update(Request $request, int $id): RedirectResponse
+    {
+        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->storage & 12)) {
+            return Redirect::to('/');
+        }
+
+        $request->validate([
+            'add' => ['required', 'integer'],
+        ]);
+
+        $item = Item::find($id);
+        if ($item != null) {
+            $item->count += $request->add;
+            $item->save();
+        }
+        return Redirect::to('/storage');
+    }
+
+
 }
