@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
     Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
     Route::get('roles', [\App\Http\Controllers\RoleController::class, 'show'])->name('roles');
+    Route::post('permissions', [\App\Http\Controllers\RoleController::class, 'update'])->name('permissions');
 });
 
 require __DIR__.'/auth.php';

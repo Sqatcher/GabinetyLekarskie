@@ -10,7 +10,8 @@
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <form method="POST">
+                <form method="POST" action="{{url("permissions")}}">
+                    @csrf
                     <div style="margin: auto;width: 100%;align-content: center; padding-bottom: 20px; padding-top: 20px;">
                         <h1 class="font-semibold text-gray-800 leading-tight" style="text-align: center;font-size: 2.25rem;">
                             {{ __('Użytkownicy') }}
