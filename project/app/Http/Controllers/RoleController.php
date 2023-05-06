@@ -60,11 +60,13 @@ class RoleController extends Controller
             $sum_storage += $request->{"edit_storage$role->id"} ?? 0;
 
             $role_update = Role::find($role->id);
+            if ($role_update == null) {
+                abort(500);
+            }
             $role_update->users = $sum_user;
             $role_update->schedules = $sum_schedules;
             $role_update->storage = $sum_storage;
             $role_update->save();
-
         }
         return Redirect::to('/roles');
     }
