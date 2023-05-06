@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
@@ -86,7 +85,5 @@ class Test14_UserEditAccountCest
         $I->dontsee('hasło musi mieć przynajmniej 8 znaków.');
         $I->dontsee('hasło musi zawierać małą i dużą literę.');
         $I->dontsee('hasło musi zawierać znak specjalny.');
-
-
     }
 }

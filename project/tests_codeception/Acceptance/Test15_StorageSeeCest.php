@@ -1,13 +1,11 @@
 <?php
 
-
 namespace TestsCodeception\Acceptance;
 
 use TestsCodeception\Support\AcceptanceTester;
 
 class Test15_StorageSeeCest
 {
-
     public function tryToTest(AcceptanceTester $I)
     {
         $I->wantTo('Check whether manager can check storage');
@@ -35,6 +33,5 @@ class Test15_StorageSeeCest
         //$I->dontsee("Łóżko");
         //$I->see("Butelka");
         //$I->see("Kroplówka");
-
     }
 }

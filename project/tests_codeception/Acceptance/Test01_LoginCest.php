@@ -38,6 +38,7 @@ class Test01_LoginCest
         $I->fillField("password", "first");
         $I->click("Zaloguj się");
 
-        $I->see("Witaj!");
+        $I->amOnPage("/");
+        $I->see("Strona główna");
     }
 }
