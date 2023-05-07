@@ -16,10 +16,23 @@ trait FilterItemHelper
 
     public function filterProcedure(Request $request, string $type): Response
     {
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
         $collection = $this->filterHelper($request, $type);
 
+        $add_form = 0;
+        if ($user_role->storage & 8) {
+            $add_form = 1;
+        }
+        elseif (isset($collection[0]))
+        {
+            if ($user_role->storage & 4 and $this->ensureIsNotNullUser(Auth::user())->facility == $collection[0]->facility_id ) {
+                $add_form = 1;
+            }
+        }
+
         return match ($type) {
-            'item' => Response($this->itemCollectionToHTMLst($collection)),
+            'item' => Response($this->itemCollectionToHTMLst($collection, $add_form)),
             default => Response('<h2>Filter problem in filter procedure</h2>'),
         };
     }

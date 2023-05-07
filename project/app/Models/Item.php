@@ -13,6 +13,8 @@ class Item extends Model
     use HasFactory;
     use Notifiable;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name', 'count', 'facility_id'
     ];
