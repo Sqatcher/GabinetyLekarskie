@@ -42,14 +42,14 @@ class RoleController extends Controller
 
             $sum_user += $request->{"see_user$role->id"} ?? 0;
             $sum_user += $request->{"create_user$role->id"} ?? 0;
-            $sum_user += $request->{"crate_facility_user$role->id"} ?? 0;
+            $sum_user += $request->{"create_facility_user$role->id"} ?? 0;
             $sum_user += $request->{"edit_user$role->id"} ?? 0;
             $sum_user += $request->{"edit_facility_user$role->id"} ?? 0;
 
             $sum_schedules = 0;
             $sum_schedules += $request->{"see_schedules$role->id"} ?? 0;
             $sum_schedules += $request->{"create_schedules$role->id"} ?? 0;
-            $sum_schedules += $request->{"crate_facility_schedules$role->id"} ?? 0;
+            $sum_schedules += $request->{"create_facility_schedules$role->id"} ?? 0;
             $sum_schedules += $request->{"edit_schedules$role->id"} ?? 0;
             $sum_schedules += $request->{"edit_facility_schedules$role->id"} ?? 0;
 

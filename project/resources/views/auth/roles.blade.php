@@ -44,7 +44,6 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="usersTable" style="vertical-align: middle; text-align: center; " >
 
-                            @csrf
                             @foreach($roles as $role)
                                 <tr>
                                     <td class="px-6 py-4" style="text-align: left;">
@@ -117,7 +116,6 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="usersTable" style="vertical-align: middle; text-align: center;" >
 
-                        @csrf
                         @foreach($roles as $role)
                             <tr>
                                 <td class="px-6 py-4" style="text-align: left;">
@@ -187,7 +185,6 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="usersTable" style="vertical-align: middle; text-align: center;" >
 
-                        @csrf
                         @foreach($roles as $role)
                             <tr>
                                 <td class="px-6 py-4" style="text-align: left;">
