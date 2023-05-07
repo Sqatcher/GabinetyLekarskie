@@ -42,7 +42,7 @@
 
                 </div>
 
-                <table class=" divide-y divide-gray-200" style="width:500px; margin: auto; box-shadow: #6b7280 1px 1px 2px">
+                <table class=" divide-y divide-gray-200" style="width:700px; margin: auto; box-shadow: #6b7280 1px 1px 2px">
                     <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase tracking-wider" style="width: 400px">
@@ -51,6 +51,10 @@
                         <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
                             Ilość
                         </th>
+                        <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                            Dodaj produkt
+                        </th>
+
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200" id="itemsTable">
