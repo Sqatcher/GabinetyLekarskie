@@ -31,7 +31,7 @@ trait ToHTMLstorage
                         <input type='hidden' name='_token' value='".csrf_token()."' />
                         <input type='number' id='add' name='add' style='width: 100px; display: inline-block;'/>
                         <div style='margin-left: 10px; display: inline-block; border: #0c5460 solid 1px; border-radius: 20px; padding: 10px; width: fit-content; background-color: #edf3fc; box-shadow: #6b7280 1px 1px 1px;'>
-                            <input type='submit' style='font-weight: bold' value='+'/>
+                            <input type='submit' style='font-weight: bold; cursor: pointer;' value='+'/>
                         </div>
                     </form>";
         if(!$add_form){
