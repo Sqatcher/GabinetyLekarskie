@@ -50,8 +50,17 @@
                 </div>
                 @endif
 
+                @if($user_role->id == 1)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('roles')" :active="request()->routeIs('auth.roles')">
+                            {{ __('Uprawnienia') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
-<!--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+
+                <!--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <a href="/register" class="mt-4">Register</a>
                 </div> -->
             </div>
