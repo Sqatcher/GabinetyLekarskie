@@ -44,11 +44,13 @@
     }
 
     function showRooms() {
+        document.getElementById("calendarTitle").textContent = "Harmonogram sal";
         document.getElementById("calendar").style.display = "block";
         document.getElementById("calendar2").style.display = "none";
     }
 
     function showUsers() {
+        document.getElementById("calendarTitle").textContent = "Harmonogram pracowników";
         document.getElementById("calendar2").style.display = "block";
         document.getElementById("calendar").style.display = "none";
     }
@@ -69,6 +71,7 @@
     <button id="RoomButton">Sale</button>
     <button id="UserButton">Pracownicy</button>
 
+    <h3 id="calendarTitle" style="font-size:28px; margin-left: 10%; margin-bottom: 10px;">Harmonogram sal</h3>
     <div style="margin: auto; width: 60%" id="calendar">
 
     </div>

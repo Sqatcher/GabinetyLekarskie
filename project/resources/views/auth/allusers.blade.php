@@ -61,6 +61,9 @@
                         <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
                             Email
                         </th>
+                        <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                            Harmonogram
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200" id="usersTable">
@@ -109,7 +112,10 @@
         $.ajax({
             type : 'get',
             url : '{{URL::to('/user/filter')}}',
-            data:{'filter_search':value},
+            data: {
+                'filter_search':value,
+                'button':1
+            },
             success:function(data){
                 $('#usersTable').html(data);
             }

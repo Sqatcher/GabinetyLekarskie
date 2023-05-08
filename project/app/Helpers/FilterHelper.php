@@ -15,12 +15,17 @@ trait FilterHelper
     use HasEnsure;
     use Get;
 
-    public function filterProcedure(Request $request, string $type): Response
+    public function filterProcedure(Request $request, string $type, string $returnType = NULL): Response
     {
+        if (is_null($returnType))
+        {
+            $returnType = $type;
+        }
         $collection = $this->filterHelper($request, $type);
 
-        return match ($type) {
+        return match ($returnType) {
             'user' => Response($this->userCollectionToHTML($collection)),
+            'button' => Response($this->userCollectionToHTMLWithButtons($collection)),
             default => Response('<h2>Filter problem in filter procedure</h2>'),
         };
     }
