@@ -48,10 +48,18 @@ class ScheduleSeeder extends Seeder
         for ($i = 0; $i < 12; $i++)
         {
             DB::table('schedules')->insert([
-                'schedule_owner' => 'k'.$i,
+                'schedule_owner' => 'k'.$i.'_1',
                 'owner_type' => 1,
-                'date_start'=>date("d-j-Y H:i:s"),
-                'date_end'=>date("d-j-Y H:i:s", strtotime('+2 hours')),
+                'date_start'=>"20-05-2023 10:30:00",
+                'date_end'=>"20-05-2023 12:30:00",
+                'type'=>rand(1,2),
+            ]);
+
+            DB::table('schedules')->insert([
+                'schedule_owner' => 'k'.$i.'_1',
+                'owner_type' => 1,
+                'date_start'=>"17-06-2023 10:30:00",
+                'date_end'=>"17-06-2023 12:30:00",
                 'type'=>rand(1,2),
             ]);
         }

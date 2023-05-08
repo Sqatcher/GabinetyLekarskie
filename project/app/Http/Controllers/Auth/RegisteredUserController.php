@@ -117,6 +117,9 @@ class RegisteredUserController extends Controller
         if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 1) {
             return Redirect::to('/');
         }
+        if (!(($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 16)) {
+            return $this->scheduleuser($this->ensureIsNotNullUser(Auth::user())->id);
+        }
 
         /* To do: role management */
         $roomSchedules = \App\Models\Schedule::where('owner_type', 2)->get();
@@ -203,13 +206,16 @@ class RegisteredUserController extends Controller
     {
         $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
 
-        if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->users & 24)) {
-            return Redirect::to('/');
+        if (!($user_role->schedules & 24)) {
+            if ($this->ensureIsNotNullUser(Auth::user())->id != $id)
+            {
+                return Redirect::to('/');
+            }
         }
 
         $user = $this->ensureIsNotNullUser(User::find($id));
 
-        $userSchedules = \App\Models\Schedule::where('schedule_owner', 'like', "k".$user->id."%")->get();
+        $userSchedules = \App\Models\Schedule::where('schedule_owner', 'like', "k".$user->id."_%")->get();
         return view('auth.scheduleuser')->with('userSchedules', $userSchedules)->with('userName', $user->name)
             ->with('userSurname', $user->surname);
     }
