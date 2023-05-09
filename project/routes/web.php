@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/filter', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'filter'])->name('user.filter');
     Route::get('/storage/filter', [\App\Http\Controllers\StorageController::class, 'filter'])->name('storage.filter');
     Route::get('edituser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "edituser"])->name("edituser");
+    Route::get('scheduleuser/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "scheduleuser"])->name("scheduleuser");
     Route::post('update/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "update"])->name("update");
     Route::post('delete/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, "delete"])->name("delete");
     Route::get('roles', [\App\Http\Controllers\RoleController::class, 'show'])->name('roles');

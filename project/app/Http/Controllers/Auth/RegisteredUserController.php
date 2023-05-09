@@ -82,8 +82,10 @@ class RegisteredUserController extends Controller
         }
         $roles = array_unique($roles);
 
+        $request = new Request();
+        $request->button = 1;
         return view('auth.allusers')
-            ->with('users', $this->filter(new Request()))
+            ->with('users', $this->filter($request))
             ->with('facilities', $facilities)
             ->with('roles', $roles)
             ->with('user_role', $user_role);
@@ -99,10 +101,15 @@ class RegisteredUserController extends Controller
             'filter_facility' => ['string'],
             'filter_role' => ['string'],
             'filter_search' => ['string'],
+            'button' => ['int']
         ]);
-
+        if ($request->button == 1) {
+            $returnType = 'button';
+        } else {
+            $returnType = NULL;
+        }
         $type = 'user';
-        return $this->filterProcedure($request, $type);
+        return $this->filterProcedure($request, $type, $returnType);
     }
 
     public function schedules(): View|RedirectResponse
@@ -110,12 +117,15 @@ class RegisteredUserController extends Controller
         if (!($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 1) {
             return Redirect::to('/');
         }
+        if (!(($this->getRole($this->ensureIsNotNullUser(Auth::user())->role)->schedules) & 16)) {
+            return $this->scheduleuser($this->ensureIsNotNullUser(Auth::user())->id);
+        }
 
         /* To do: role management */
         $roomSchedules = \App\Models\Schedule::where('owner_type', 2)->get();
         $userSchedules = \App\Models\Schedule::where('owner_type', 1)->get();
 
-        return view('dashboardAdmin')->with('roomSchedules', $roomSchedules)->with('userSchedules', $userSchedules);
+        return view('schedules')->with('roomSchedules', $roomSchedules)->with('userSchedules', $userSchedules);
     }
 
     /**
@@ -190,6 +200,24 @@ class RegisteredUserController extends Controller
 
         return view('auth.edituser')->with('user', $user)->with('user_role', $user_role)->with('roles', $roles)
             ->with('facilities', $facilities);
+    }
+
+    public function scheduleuser(int $id): View|RedirectResponse
+    {
+        $user_role = $this->getRole($this->ensureIsNotNullUser(Auth::user())->role);
+
+        if (!($user_role->schedules & 24)) {
+            if ($this->ensureIsNotNullUser(Auth::user())->id != $id)
+            {
+                return Redirect::to('/');
+            }
+        }
+
+        $user = $this->ensureIsNotNullUser(User::find($id));
+
+        $userSchedules = \App\Models\Schedule::where('schedule_owner', 'like', "k".$user->id."_%")->get();
+        return view('auth.scheduleuser')->with('userSchedules', $userSchedules)->with('userName', $user->name)
+            ->with('userSurname', $user->surname);
     }
 
     public function update(Request $request, int $id): RedirectResponse
